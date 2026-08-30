@@ -28,14 +28,14 @@ export async function Hero() {
             <div className="mt-7 flex items-center gap-2.5 sm:mt-9 sm:gap-3">
               <InteractiveHoverLink
                 href={c.primaryCtaHref}
-                variant="onDark"
+                variant="heroDark"
                 className="flex-1 justify-center whitespace-nowrap px-3 sm:flex-initial sm:px-6"
               >
                 {c.primaryCtaLabel}
               </InteractiveHoverLink>
               <InteractiveHoverLink
                 href={c.secondaryCtaHref}
-                variant="onDark"
+                variant="heroDark"
                 className="flex-1 justify-center whitespace-nowrap px-3 sm:flex-initial sm:px-6"
               >
                 {c.secondaryCtaLabel}
