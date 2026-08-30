@@ -40,6 +40,9 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       role: { type: "string", defaultValue: "client", input: false },
+      // phone/bio are edited on /admin/profile via a Prisma-direct server action and
+      // read straight from the DB there — deliberately NOT declared here so a lagging
+      // `db:push` can't take auth down on every getSession().
     },
   },
   databaseHooks: {

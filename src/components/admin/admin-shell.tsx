@@ -114,7 +114,7 @@ export function AdminShell({
   openAlerts = 0,
   children,
 }: {
-  user: { name?: string | null; email?: string | null; role?: string | null };
+  user: { name?: string | null; email?: string | null; role?: string | null; image?: string | null };
   openAlerts?: number;
   children: React.ReactNode;
 }) {
@@ -219,15 +219,28 @@ export function AdminShell({
                 </span>
               )}
             </Link>
-            <div className="flex items-center gap-2">
-              <span className="grid size-8 place-items-center rounded-full bg-foreground text-xs font-medium text-background">
-                {(user.name ?? user.email ?? "A").slice(0, 1).toUpperCase()}
-              </span>
+            <Link
+              href="/admin/profile"
+              title="My profile"
+              className="flex items-center gap-2 rounded-md px-1 py-1 transition hover:bg-secondary"
+            >
+              {user.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={user.image}
+                  alt=""
+                  className="size-8 rounded-full object-cover"
+                />
+              ) : (
+                <span className="grid size-8 place-items-center rounded-full bg-foreground text-xs font-medium text-background">
+                  {(user.name ?? user.email ?? "A").slice(0, 1).toUpperCase()}
+                </span>
+              )}
               <div className="hidden text-xs leading-tight sm:block">
                 <p className="text-foreground">{user.email}</p>
                 <p className="text-muted-foreground">{ROLE_LABEL[role] ?? role}</p>
               </div>
-            </div>
+            </Link>
           </div>
         </header>
 

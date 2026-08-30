@@ -4,6 +4,7 @@ import { guardPage } from "@/lib/admin-guard";
 import { formatNaira, formatDate } from "@/lib/format";
 import { AdminPage, DbDown, Panel, Table, THead, TH, TR, TD } from "@/components/admin/ui";
 import { OrderStatusSelect } from "@/components/admin/order-status-select";
+import { OrderStatusOverride } from "@/components/admin/order-status-override";
 import { OrderFulfillmentControl } from "@/components/admin/order-fulfillment-control";
 import { OrderPaymentPanel } from "@/components/admin/order-payment-panel";
 import { TrackingTimeline, type FulfillmentStage, type DeliveryMethod } from "@/components/orders/tracking-timeline";
@@ -90,6 +91,8 @@ export default async function OrderDetailPage({ params }: PageProps<"/admin/orde
               </div>
             </div>
           </Panel>
+
+          {isAdmin && <OrderStatusOverride id={order.id} status={order.status} />}
         </div>
 
         <div className="space-y-4">

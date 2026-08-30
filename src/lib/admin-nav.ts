@@ -17,6 +17,7 @@ import {
   Inbox,
   Mail,
   Settings,
+  CircleUser,
   type LucideIcon,
 } from "lucide-react";
 import type { Permission } from "@/lib/roles";
@@ -69,6 +70,7 @@ export const adminNav: AdminGroup[] = [
   {
     title: "",
     links: [
+      { href: "/admin/profile", label: "My profile", icon: CircleUser, permission: "overview" },
       { href: "/admin/staff", label: "Staff & roles", icon: UserCog, permission: "staff:write" },
       { href: "/admin/audit", label: "Audit log", icon: ScrollText, permission: "audit:read" },
       { href: "/admin/settings", label: "Settings", icon: Settings, permission: "settings:write" },

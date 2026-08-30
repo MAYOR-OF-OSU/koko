@@ -24,6 +24,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         name: session.user.name,
         email: session.user.email,
         role: session.user.role ?? "client",
+        image: session.user.image ?? null,
       }}
       openAlerts={openAlerts}
     >

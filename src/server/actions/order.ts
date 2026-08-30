@@ -46,6 +46,68 @@ export async function updateOrderStatus(id: string, status: OrderStatus) {
   revalidatePath(`/admin/orders/${id}`);
 }
 
+const overrideSchema = z.object({
+  status: z.enum(STATUSES),
+  reason: z.string().trim().min(3).max(400),
+});
+
+/**
+ * Admin only — the "veto": force an order to any status regardless of the normal
+ * flow, reconciling the payment fields and recording who changed it and why.
+ * Reversing a paid/fulfilled order back to pending or cancelled drops its payment
+ * stamps; the quick status dropdown must not do that silently.
+ */
+export async function overrideOrderStatus(
+  id: string,
+  input: z.input<typeof overrideSchema>,
+): Promise<Result> {
+  try {
+    const session = await requireAdmin();
+    const d = overrideSchema.parse(input);
+
+    const order = await prisma.order.findUnique({
+      where: { id },
+      select: { reference: true, status: true, paidAt: true, paystackRef: true },
+    });
+    if (!order) return { ok: false, error: "Order not found" };
+    if (order.status === d.status) return { ok: false, error: `Order is already ${d.status}.` };
+
+    const note = `Admin override (${order.status} → ${d.status}): ${d.reason}`;
+    const data: {
+      status: OrderStatus;
+      paymentNote: string;
+      paidAt?: Date | null;
+      paystackRef?: string | null;
+    } = { status: d.status, paymentNote: note };
+
+    if (d.status === "paid") {
+      // Forcing paid — make the payment record coherent without emailing a receipt.
+      data.paidAt = order.paidAt ?? new Date();
+      data.paystackRef = order.paystackRef ?? "manual";
+    } else if (order.status === "paid" || order.status === "fulfilled") {
+      // Reversing a settled order — drop the payment stamps.
+      data.paidAt = null;
+      data.paystackRef = null;
+    }
+
+    await prisma.order.update({ where: { id }, data });
+    await logAudit({
+      action: "order.override",
+      target: order.reference,
+      meta: { from: order.status, to: d.status, reason: d.reason, by: session.user.email },
+    });
+
+    revalidatePath("/admin/orders");
+    revalidatePath(`/admin/orders/${id}`);
+    revalidatePath("/account/orders");
+    revalidatePath(`/account/orders/${id}`);
+    revalidatePath("/track-order");
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Could not override the order" };
+  }
+}
+
 type VerifySummary = {
   status: string;
   amountKobo: number;
