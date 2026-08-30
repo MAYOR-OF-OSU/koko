@@ -4,6 +4,7 @@ import { admin } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
 import { prisma } from "@/lib/prisma";
 import { env } from "@/lib/env";
+import { sendMail } from "@/lib/mail";
 
 const googleProvider =
   env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
@@ -35,6 +36,19 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
+    resetPasswordTokenExpiresIn: 3600, // 1 hour
+    sendResetPassword: async ({ user, url }) => {
+      // sendMail is a no-op (console log) until SMTP_* env vars are set.
+      await sendMail({
+        to: user.email,
+        subject: "Reset your Timi's Jewels password",
+        html: `<p>Hi ${user.name || "there"},</p>
+          <p>We got a request to reset your Timi's Jewels password. This link expires in 1 hour:</p>
+          <p><a href="${url}">Set a new password</a></p>
+          <p>If you didn't ask for this, you can safely ignore this email.</p>`,
+        text: `Reset your Timi's Jewels password (expires in 1 hour): ${url}`,
+      }).catch(() => {});
+    },
   },
   ...(googleProvider ? { socialProviders: googleProvider } : {}),
   user: {

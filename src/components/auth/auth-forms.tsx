@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { Mail, Lock, User, Eye, EyeOff, Loader2 } from "lucide-react";
-import { signIn, signUp } from "@/lib/auth-client";
+import { signIn, signUp, authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
 function useNext() {
@@ -249,26 +249,112 @@ export function RegisterForm({ googleEnabled = false }: { googleEnabled?: boolea
 
 export function ForgotPasswordForm() {
   const [sent, setSent] = React.useState(false);
+  const [pending, setPending] = React.useState(false);
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const email = String(new FormData(e.currentTarget).get("email"));
+    setPending(true);
+    try {
+      // better-auth returns success even for unknown emails (no account enumeration).
+      const { error } = await authClient.requestPasswordReset({
+        email,
+        redirectTo: "/reset-password",
+      });
+      if (error) {
+        toast.error(error.message ?? "Couldn't send the reset link. Try again.");
+        return;
+      }
+      setSent(true);
+    } catch {
+      toast.error("Couldn't reach the server. Please try again.");
+    } finally {
+      setPending(false);
+    }
+  }
 
   return (
     <div className="space-y-6">
       <Heading title="Reset Password" subtitle="We'll email you a reset link" />
       {sent ? (
         <p className="rounded-md border border-border bg-secondary/50 p-4 text-center text-sm text-muted-foreground">
-          If an account exists for that email, a reset link is on its way.
+          If an account exists for that email, a reset link is on its way. It expires in an hour.
         </p>
       ) : (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setSent(true);
-          }}
-          className="space-y-4"
-        >
+        <form onSubmit={onSubmit} className="space-y-4">
           <AuthField id="email" label="Email Address" type="email" icon={Mail} autoComplete="email" placeholder="Enter your email" />
-          <SubmitButton pending={false}>Send Reset Link</SubmitButton>
+          <SubmitButton pending={pending}>{pending ? "Sending…" : "Send Reset Link"}</SubmitButton>
         </form>
       )}
+      <p className="text-center text-sm">
+        <Link href="/login" className="text-rose-deep hover:underline">
+          Back to sign in
+        </Link>
+      </p>
+    </div>
+  );
+}
+
+export function ResetPasswordForm() {
+  const router = useRouter();
+  const params = useSearchParams();
+  const token = params.get("token") ?? "";
+  const invalid = params.get("error");
+  const [pending, setPending] = React.useState(false);
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const password = String(fd.get("password"));
+    const confirm = String(fd.get("confirm"));
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters.");
+      return;
+    }
+    if (password !== confirm) {
+      toast.error("Passwords don't match.");
+      return;
+    }
+    setPending(true);
+    try {
+      const { error } = await authClient.resetPassword({ newPassword: password, token });
+      if (error) {
+        toast.error(error.message ?? "That reset link is invalid or has expired.");
+        return;
+      }
+      toast.success("Password updated — sign in with your new password.");
+      router.push("/login");
+    } catch {
+      toast.error("Couldn't reach the server. Please try again.");
+    } finally {
+      setPending(false);
+    }
+  }
+
+  if (invalid || !token) {
+    return (
+      <div className="space-y-6">
+        <Heading title="Link expired" subtitle="This reset link is no longer valid" />
+        <p className="rounded-md border border-border bg-secondary/50 p-4 text-center text-sm text-muted-foreground">
+          Reset links expire after an hour. Request a fresh one to continue.
+        </p>
+        <p className="text-center text-sm">
+          <Link href="/forgot-password" className="text-rose-deep hover:underline">
+            Send a new link
+          </Link>
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <Heading title="Set a new password" subtitle="Choose something you'll remember" />
+      <form onSubmit={onSubmit} className="space-y-4">
+        <AuthField id="password" label="New password" type="password" icon={Lock} autoComplete="new-password" placeholder="At least 8 characters" />
+        <AuthField id="confirm" label="Confirm password" type="password" icon={Lock} autoComplete="new-password" placeholder="Re-enter it" />
+        <SubmitButton pending={pending}>{pending ? "Saving…" : "Update password"}</SubmitButton>
+      </form>
       <p className="text-center text-sm">
         <Link href="/login" className="text-rose-deep hover:underline">
           Back to sign in

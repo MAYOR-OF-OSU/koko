@@ -25,10 +25,18 @@ export function CheckoutForm({
   shippingKobo,
   paystackReady,
   testMode,
+  defaultAddress,
 }: {
   shippingKobo: number;
   paystackReady: boolean;
   testMode: boolean;
+  defaultAddress?: {
+    fullName: string;
+    phone: string;
+    street: string;
+    city: string;
+    state: string;
+  } | null;
 }) {
   const { data: session } = useSession();
   const { lines } = useCart();
@@ -36,14 +44,17 @@ export function CheckoutForm({
   const shipping = lines.length ? shippingKobo : 0;
   const total = subtotal + shipping;
 
-  const [v, setV] = React.useState<Values>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    street: "",
-    city: "",
-    state: "",
+  const [v, setV] = React.useState<Values>(() => {
+    const [first, ...rest] = (defaultAddress?.fullName ?? "").split(" ");
+    return {
+      firstName: first ?? "",
+      lastName: rest.join(" "),
+      email: "",
+      phone: defaultAddress?.phone ?? "",
+      street: defaultAddress?.street ?? "",
+      city: defaultAddress?.city ?? "",
+      state: defaultAddress?.state ?? "",
+    };
   });
   const [submitting, setSubmitting] = React.useState(false);
   const prefilled = React.useRef(false);
