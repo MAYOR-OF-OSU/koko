@@ -63,7 +63,7 @@ export function StatsBand({ content }: { content: StatsContent }) {
 
   return (
     <section className="border-y border-border bg-secondary/30">
-      <div className="mx-auto max-w-[100rem] px-4 py-14 sm:px-8">
+      <div className="mx-auto max-w-[100rem] px-4 py-10 sm:px-8 md:py-12">
         {content.eyebrow && (
           <p className="mb-8 text-center text-[0.7rem] font-medium uppercase tracking-[0.28em] text-muted-foreground">
             {content.eyebrow}

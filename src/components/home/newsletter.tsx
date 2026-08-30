@@ -70,7 +70,7 @@ export function NewsletterForm({ variant = "section" }: { variant?: "section" | 
 export function NewsletterSection() {
   return (
     <section className="border-y border-border bg-secondary/50">
-      <Reveal className="mx-auto flex max-w-xl flex-col items-center px-4 py-24 text-center sm:px-6">
+      <Reveal className="mx-auto flex max-w-xl flex-col items-center px-4 py-14 text-center sm:px-6 md:py-20">
         <span className="eyebrow">Newsletter</span>
         <h2 className="mt-4 font-heading text-3xl sm:text-4xl">Be first to the next drop</h2>
         <p className="mt-3 text-muted-foreground">

@@ -19,7 +19,7 @@ export default async function JournalPostPage({ params }: PageProps<"/journal/[s
   if (!post) notFound();
 
   return (
-    <article className="mx-auto max-w-2xl px-4 py-20 sm:px-6">
+    <article className="mx-auto max-w-2xl px-4 py-14 sm:px-6 md:py-16">
       <Link href="/journal" className="text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground hover:text-foreground">
         ← Journal
       </Link>

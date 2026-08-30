@@ -40,7 +40,7 @@ function LinkColumn({ title, links }: { title: string; links: { label: string; h
 export async function SiteFooter() {
   const contact = await getStoreSettings();
   return (
-    <footer className="mt-10 bg-cocoa text-cocoa-foreground sm:mt-12">
+    <footer className="mt-6 bg-cocoa text-cocoa-foreground sm:mt-8">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-8">
         <div className="grid gap-x-6 gap-y-7 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="max-w-sm">

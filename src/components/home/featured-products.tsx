@@ -7,7 +7,7 @@ export function FeaturedProducts() {
   const list = products.slice(0, 10);
 
   return (
-    <section className="mx-auto max-w-[100rem] px-4 py-24 sm:px-8">
+    <section className="mx-auto max-w-[100rem] px-4 py-14 sm:px-8 md:py-20">
       <div className="grid min-w-0 gap-10 lg:grid-cols-[22rem_minmax(0,1fr)] lg:items-center">
         <div>
           <span className="eyebrow">The edit</span>

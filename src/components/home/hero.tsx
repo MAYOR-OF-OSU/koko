@@ -15,7 +15,7 @@ export async function Hero() {
           <HeroCarousel images={images} />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(20,10,26,0.6)_0%,rgba(20,10,26,0.3)_40%,rgba(20,10,26,0.72)_100%)]" />
 
-          <div className="relative flex min-h-[88svh] flex-col justify-center px-6 pb-44 pt-36 text-white sm:px-12 lg:px-20">
+          <div className="relative flex min-h-[80svh] flex-col justify-center px-6 pb-36 pt-32 text-white sm:px-12 lg:px-20">
             <span className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-white/70">
               {c.eyebrow}
             </span>
@@ -25,18 +25,18 @@ export async function Hero() {
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/80 sm:text-[0.95rem]">
               {c.body}
             </p>
-            <div className="mt-9 flex items-center gap-2.5 sm:gap-3">
+            <div className="mt-7 flex items-center gap-2.5 sm:mt-9 sm:gap-3">
               <InteractiveHoverLink
                 href={c.primaryCtaHref}
                 variant="onDark"
-                className="flex-1 justify-center px-4 sm:flex-initial sm:px-6"
+                className="flex-1 justify-center whitespace-nowrap px-3 sm:flex-initial sm:px-6"
               >
                 {c.primaryCtaLabel}
               </InteractiveHoverLink>
               <InteractiveHoverLink
                 href={c.secondaryCtaHref}
                 variant="onDark"
-                className="flex-1 justify-center px-4 sm:flex-initial sm:px-6"
+                className="flex-1 justify-center whitespace-nowrap px-3 sm:flex-initial sm:px-6"
               >
                 {c.secondaryCtaLabel}
               </InteractiveHoverLink>

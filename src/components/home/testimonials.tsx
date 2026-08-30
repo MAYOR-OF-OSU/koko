@@ -7,13 +7,13 @@ export async function Testimonials() {
   const shown = rows.slice(0, 3);
 
   return (
-    <section className="mx-auto max-w-[100rem] px-4 py-24 sm:px-8">
+    <section className="mx-auto max-w-[100rem] px-4 py-14 sm:px-8 md:py-20">
       <div className="text-center">
         <span className="eyebrow">Reviews</span>
         <h2 className="mt-3 font-heading text-3xl sm:text-4xl">4.9 average from 2,000+ orders</h2>
       </div>
 
-      <Reveal group className="mt-14 grid gap-10 sm:grid-cols-3">
+      <Reveal group className="mt-10 grid gap-10 sm:grid-cols-3 md:mt-12">
         {shown.map((t, i) => (
           <RevealItem key={i} className="text-center">
             <div className="flex justify-center gap-1 text-accent-gold">

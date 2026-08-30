@@ -18,7 +18,7 @@ export default async function ContactPage() {
         title="Talk to us"
         subtitle="Order help, sizing questions, wholesale enquiries — we usually reply within a day."
       />
-      <section className="mx-auto grid max-w-7xl gap-12 px-4 pb-20 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <section className="mx-auto grid max-w-7xl gap-12 px-4 pb-14 sm:px-6 lg:grid-cols-2 lg:px-8">
         <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
           <ContactForm />
         </div>

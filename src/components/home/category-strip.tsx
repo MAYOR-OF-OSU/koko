@@ -4,7 +4,7 @@ import { categories } from "@/lib/mock-data";
 
 export function CategoryStrip() {
   return (
-    <section className="py-24">
+    <section className="py-14 md:py-20">
       <div className="mx-auto flex max-w-[100rem] items-end justify-between gap-4 px-4 sm:px-8">
         <div>
           <span className="eyebrow">Collections</span>
@@ -18,7 +18,7 @@ export function CategoryStrip() {
         </Link>
       </div>
 
-      <div className="no-scrollbar mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:px-8">
+      <div className="no-scrollbar mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:px-8 md:mt-10">
         {categories.map((c) => (
           <Link
             key={c.slug}

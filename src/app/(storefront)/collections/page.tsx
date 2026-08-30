@@ -68,7 +68,7 @@ export default function CollectionsPage() {
       </section>
 
       {/* curated edits */}
-      <section className="mx-auto max-w-[100rem] px-4 pb-24 sm:px-8">
+      <section className="mx-auto max-w-[100rem] px-4 pb-16 sm:px-8">
         <h2 className="mb-8 font-heading text-2xl sm:text-3xl">Curated edits</h2>
         <div className="grid gap-5 md:grid-cols-3">
           {EDITS.map((e) => (

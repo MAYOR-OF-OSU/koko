@@ -8,8 +8,8 @@ export async function Pillars() {
   const c = await getSetting("home.story");
 
   return (
-    <section className="mx-auto max-w-[100rem] px-4 py-24 sm:px-8">
-      <div className="grid items-center gap-14 lg:grid-cols-2">
+    <section className="mx-auto max-w-[100rem] px-4 py-14 sm:px-8 md:py-20">
+      <div className="grid items-center gap-10 lg:grid-cols-2 md:gap-14">
         <Reveal className="relative aspect-[5/6] overflow-hidden bg-muted">
           <Image
             src={c.imageUrl}

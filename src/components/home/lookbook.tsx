@@ -13,7 +13,7 @@ const shots = [
 
 export function Lookbook() {
   return (
-    <section className="border-y border-border bg-secondary/40 py-20">
+    <section className="border-y border-border bg-secondary/40 py-14 md:py-16">
       <div className="mx-auto flex max-w-[100rem] items-end justify-between gap-4 px-4 sm:px-8">
         <div>
           <span className="eyebrow">Lookbook</span>
@@ -27,7 +27,7 @@ export function Lookbook() {
         </Link>
       </div>
 
-      <div className="no-scrollbar mt-10 flex snap-x gap-3 overflow-x-auto px-4 pb-2 sm:px-8">
+      <div className="no-scrollbar mt-8 flex snap-x gap-3 overflow-x-auto px-4 pb-2 sm:px-8 md:mt-10">
         {shots.map((s, i) => (
           <Link
             key={s.key}

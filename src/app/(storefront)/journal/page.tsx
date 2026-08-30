@@ -16,7 +16,7 @@ export default async function JournalPage() {
   return (
     <>
       <PageHero eyebrow="Journal" title="Notes & stories" />
-      <section className="mx-auto max-w-[100rem] px-4 pb-28 sm:px-8">
+      <section className="mx-auto max-w-[100rem] px-4 pb-16 sm:px-8">
         {posts.length === 0 ? (
           <p className="py-16 text-center text-muted-foreground">Nothing published yet — check back soon.</p>
         ) : (

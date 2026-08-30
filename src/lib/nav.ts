@@ -7,6 +7,7 @@ export const primaryNav: NavItem[] = [
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "FAQ", href: "/faq" },
+  { label: "Track order", href: "/track-order" },
 ];
 
 export const footerNav = {

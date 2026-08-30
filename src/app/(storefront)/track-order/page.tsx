@@ -42,7 +42,7 @@ export default function TrackOrderPage() {
         title="Track your order"
         subtitle="Enter the reference from your confirmation email or SMS, plus the email you ordered with."
       />
-      <section className="mx-auto max-w-2xl px-4 pb-24 sm:px-6">
+      <section className="mx-auto max-w-2xl px-4 pb-16 sm:px-6">
         <form className="grid gap-4 sm:grid-cols-2" onSubmit={onSubmit}>
           <div className="space-y-1.5">
             <Label htmlFor="ref">Order reference</Label>

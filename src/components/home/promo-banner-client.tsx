@@ -45,7 +45,7 @@ export function PromoBannerClient({
 
   return (
     <section className="bg-cocoa text-cocoa-foreground">
-      <div className="mx-auto flex max-w-[100rem] flex-col items-center gap-6 px-4 py-16 text-center sm:flex-row sm:justify-between sm:px-8 sm:text-left">
+      <div className="mx-auto flex max-w-[100rem] flex-col items-center gap-6 px-4 py-12 text-center sm:flex-row sm:justify-between sm:px-8 sm:text-left md:py-14">
         <div>
           <span className="text-[0.7rem] uppercase tracking-[0.24em] text-accent-gold">{eyebrow}</span>
           <h2 className="mt-3 max-w-xl font-heading text-2xl sm:text-3xl">{headline}</h2>

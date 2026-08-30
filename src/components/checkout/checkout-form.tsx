@@ -102,7 +102,7 @@ export function CheckoutForm({
   }
 
   return (
-    <section className="mx-auto grid max-w-5xl gap-10 px-4 pb-24 sm:px-6 lg:grid-cols-[1fr_20rem]">
+    <section className="mx-auto grid max-w-5xl gap-10 px-4 pb-16 sm:px-6 lg:grid-cols-[1fr_20rem]">
       <form className="space-y-4" onSubmit={submit}>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field id="firstName" label="First name" value={v.firstName} onChange={(x) => set("firstName", x)} required />

@@ -25,7 +25,7 @@ export default async function AboutPage() {
       </section>
 
       {c.bodyHtml && (
-        <section className="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+        <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6 md:py-12">
           <div
             className="text-[0.98rem] leading-relaxed text-muted-foreground [&_a]:text-foreground [&_a]:underline [&_h2]:mt-6 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:text-foreground [&_li]:ml-5 [&_li]:list-disc [&_p+p]:mt-4"
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(c.bodyHtml) }}
@@ -33,7 +33,7 @@ export default async function AboutPage() {
         </section>
       )}
 
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <Reveal group className="grid gap-6 md:grid-cols-3">
           {c.values.map((v, i) => (
             <div key={i} className="rounded-2xl border border-border bg-card p-6">
@@ -44,7 +44,7 @@ export default async function AboutPage() {
         </Reveal>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-20 text-center sm:px-6">
+      <section className="mx-auto max-w-3xl px-4 pb-14 text-center sm:px-6">
         <div className="hairline mx-auto mb-8 max-w-xs" />
         <p className="text-muted-foreground">
           Visit us at <span className="text-foreground">{store.address}</span> or reach the team on{" "}

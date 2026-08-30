@@ -56,7 +56,7 @@ export default async function CheckoutCallbackPage({
   return (
     <>
       <PageHero eyebrow="Checkout" title="Payment" />
-      <section className="mx-auto max-w-md px-4 pb-24 text-center sm:px-6">
+      <section className="mx-auto max-w-md px-4 pb-16 text-center sm:px-6">
         {state.kind === "success" && (
           <div className="rounded-2xl border border-border bg-card p-8">
             <ClearCartOnMount />

@@ -14,7 +14,7 @@ export default function CartPage() {
   return (
     <>
       <PageHero eyebrow="Bag" title="Your bag" />
-      <section className="mx-auto max-w-5xl px-4 pb-24 sm:px-6">
+      <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
         {lines.length === 0 ? (
           <div className="rounded-2xl border border-border bg-card p-12 text-center">
             <p className="text-muted-foreground">Your bag is empty.</p>

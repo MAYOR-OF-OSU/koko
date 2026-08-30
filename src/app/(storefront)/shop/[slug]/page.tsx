@@ -69,7 +69,7 @@ export default async function ProductPage({ params }: PageProps<"/shop/[slug]">)
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="mx-auto max-w-[100rem] px-4 pt-24 text-[0.72rem] uppercase tracking-[0.14em] text-muted-foreground sm:px-8">
+      <div className="mx-auto max-w-[100rem] px-4 pt-16 text-[0.72rem] uppercase tracking-[0.14em] text-muted-foreground sm:px-8 sm:pt-20">
         <Link href="/shop" className="hover:text-foreground">
           Shop
         </Link>
@@ -132,7 +132,7 @@ export default async function ProductPage({ params }: PageProps<"/shop/[slug]">)
       <ProductTabs description={product.description} />
 
       {related.length > 0 && (
-        <section className="mx-auto max-w-[100rem] px-4 py-12 sm:px-8">
+        <section className="mx-auto max-w-[100rem] px-4 py-10 sm:px-8 md:py-12">
           <div className="mb-6 flex items-end justify-between">
             <h2 className="font-heading text-2xl sm:text-3xl">You may also like</h2>
             <Link

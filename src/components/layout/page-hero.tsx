@@ -11,7 +11,7 @@ export function PageHero({
 }) {
   return (
     <section
-      className={`mx-auto max-w-[100rem] px-4 pb-10 pt-20 sm:px-8 ${
+      className={`mx-auto max-w-[100rem] px-4 pb-8 pt-12 sm:px-8 sm:pt-16 ${
         align === "center" ? "text-center" : ""
       }`}
     >

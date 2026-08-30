@@ -11,7 +11,8 @@ const shell: Record<Variant, string> = {
   // outlined resting state → fills purple on hover
   outline: "border-foreground/20 bg-transparent text-foreground",
   // for use over a dark hero → fills white on hover
-  onDark: "border-white/40 bg-white/10 text-white",
+  onDark:
+    "border-white/40 bg-white/10 text-white hover:border-white hover:bg-white hover:text-primary",
 };
 
 const dot: Record<Variant, string> = {

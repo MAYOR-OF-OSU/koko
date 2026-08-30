@@ -19,9 +19,9 @@ export default async function FaqPage() {
   return (
     <>
       <PageHero eyebrow="Help" title="Frequently asked questions" />
-      <section className="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
+      <section className="mx-auto max-w-3xl px-4 pb-14 sm:px-6">
         {groups.map((g) => (
-          <div key={g.id} id={g.id} className="scroll-mt-28 py-6">
+          <div key={g.id} id={g.id} className="scroll-mt-28 py-5">
             <h2 className="mb-2 font-heading text-xl">{g.title}</h2>
             <Accordion>
               {g.qas.map((qa, i) => (

@@ -48,7 +48,7 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
   return (
     <>
       {/* banner */}
-      <section className="px-3 pt-20 sm:px-4 lg:pt-24">
+      <section className="px-3 pt-12 sm:px-4 sm:pt-16 lg:pt-20">
         <div className="relative isolate overflow-hidden rounded-3xl bg-cocoa">
           <Image
             src="/shop/shop-banner.jpg"
@@ -108,7 +108,7 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
 
       {/* newsletter band */}
       <section className="bg-cocoa text-cocoa-foreground">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 px-4 py-12 text-center sm:px-6">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 px-4 py-10 text-center sm:px-6">
           <h2 className="font-heading text-3xl sm:text-4xl">Ready to get our new pieces?</h2>
           <p className="text-sm text-cocoa-foreground/75">
             Join the list for new drops, restocks and members-only sales.

@@ -10,7 +10,7 @@ export function HeroCategoryCards() {
   const railRef = React.useRef<HTMLDivElement>(null);
 
   return (
-    <div className="relative z-20 mx-auto -mt-28 max-w-[100rem] min-w-0 px-4 sm:-mt-32 sm:px-8">
+    <div className="relative z-20 mx-auto -mt-24 max-w-[100rem] min-w-0 px-4 sm:-mt-28 sm:px-8">
       <div
         ref={railRef}
         className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2"
