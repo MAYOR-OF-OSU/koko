@@ -4,6 +4,7 @@ import * as React from "react";
 import { toast } from "sonner";
 import { LinkIcon, Upload, Images, X, Loader2 } from "lucide-react";
 import { listMedia, type MediaAssetLite } from "@/server/actions/media";
+import { uploadMedia } from "@/lib/media-client";
 import { Field, TextInput, inputClass } from "@/components/admin/form";
 import {
   Dialog,
@@ -37,18 +38,11 @@ export function MediaField({
   async function upload(file: File) {
     setBusy(true);
     try {
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch("/api/admin/media", { method: "POST", body: fd });
-      const json = (await res.json()) as { ok: boolean; asset?: { url: string }; error?: string };
-      if (json.ok && json.asset) {
-        onChange(json.asset.url);
-        toast.success("Uploaded");
-      } else {
-        toast.error(json.error ?? "Upload failed");
-      }
-    } catch {
-      toast.error("Upload failed");
+      const { url } = await uploadMedia(file);
+      onChange(url);
+      toast.success("Uploaded");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
     } finally {
       setBusy(false);
     }

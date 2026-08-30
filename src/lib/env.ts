@@ -38,6 +38,10 @@ export const env = createEnv({
     CLOUDFLARE_IMAGES_TOKEN: z.string().optional(),
     R2_BUCKET: z.string().optional(),
 
+    // Vercel Blob — media uploads go here when present (Vercel injects it once a
+    // Blob store is connected); without it, uploads fall back to the local FS.
+    BLOB_READ_WRITE_TOKEN: z.string().optional(),
+
     // Google OAuth (inert until both provided)
     GOOGLE_CLIENT_ID: z.string().optional(),
     GOOGLE_CLIENT_SECRET: z.string().optional(),
@@ -63,6 +67,7 @@ export const env = createEnv({
     CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID,
     CLOUDFLARE_IMAGES_TOKEN: process.env.CLOUDFLARE_IMAGES_TOKEN,
     R2_BUCKET: process.env.R2_BUCKET,
+    BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
@@ -80,5 +85,7 @@ export const features = {
   paystackTestMode: (process.env.PAYSTACK_SECRET_KEY ?? "").startsWith("sk_test_"),
   email: Boolean(process.env.SMTP_HOST),
   cloudflareImages: Boolean(process.env.CLOUDFLARE_ACCOUNT_ID && process.env.CLOUDFLARE_IMAGES_TOKEN),
+  /** true when Vercel Blob is connected — media uploads stream straight to it. */
+  blob: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
   google: Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET),
 };

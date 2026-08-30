@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Outfit, Geist_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { env } from "@/lib/env";
@@ -54,9 +55,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${fraunces.variable} ${outfit.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="flex min-h-svh flex-col">
+      <body className="flex min-h-dvh flex-col">
         {children}
         <Toaster position="top-center" richColors />
+        <SpeedInsights />
       </body>
     </html>
   );

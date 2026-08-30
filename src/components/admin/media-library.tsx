@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Upload, Link as LinkIcon, Copy, Trash2, Loader2 } from "lucide-react";
 import { addMediaByUrl, deleteMedia, type MediaAssetLite } from "@/server/actions/media";
+import { uploadMedia } from "@/lib/media-client";
 import { Field, TextInput, SaveButton, useAction, inputClass } from "@/components/admin/form";
 import { Panel, CardHeading } from "@/components/admin/ui";
 import { cn } from "@/lib/utils";
@@ -34,18 +35,11 @@ export function MediaLibrary({ assets }: { assets: MediaAssetLite[] }) {
   async function upload(file: File) {
     setBusy(true);
     try {
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch("/api/admin/media", { method: "POST", body: fd });
-      const json = (await res.json()) as { ok: boolean; error?: string };
-      if (json.ok) {
-        toast.success("Uploaded");
-        router.refresh();
-      } else {
-        toast.error(json.error ?? "Upload failed");
-      }
-    } catch {
-      toast.error("Upload failed");
+      await uploadMedia(file);
+      toast.success("Uploaded");
+      router.refresh();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Upload failed");
     } finally {
       setBusy(false);
     }

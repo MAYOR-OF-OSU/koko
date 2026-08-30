@@ -44,7 +44,7 @@ export async function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-8">
         <div className="grid gap-x-6 gap-y-7 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="max-w-sm">
-            <Logo variant="lockup" className="h-6 text-cocoa-foreground" />
+            <Logo variant="lockup" className="h-8 text-cocoa-foreground" />
             <p className="mt-3 text-[0.8rem] leading-relaxed text-cocoa-foreground/70">
               Handpicked fashion jewelry, finished by hand and shipped nationwide.
             </p>
