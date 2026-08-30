@@ -1,13 +1,13 @@
-export type NavItem = { label: string; href: string };
+export type NavItem = { label: string; href: string; image?: string };
 
 export const primaryNav: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Shop", href: "/shop" },
-  { label: "Collections", href: "/collections" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Track order", href: "/track-order" },
+  { label: "Home", href: "/", image: "/hero/hero-editorial.jpg" },
+  { label: "Shop", href: "/shop", image: "/shop/shop-banner.jpg" },
+  { label: "Collections", href: "/collections", image: "/categories/necklaces.jpg" },
+  { label: "About", href: "/about", image: "/shop/lifestyle-dark.jpg" },
+  { label: "Contact", href: "/contact", image: "/products/fashion-earrings-1.jpg" },
+  { label: "FAQ", href: "/faq", image: "/products/knuckle-rings-1.jpg" },
+  { label: "Track order", href: "/track-order", image: "/products/leg-chains-1.jpg" },
 ];
 
 export const footerNav = {

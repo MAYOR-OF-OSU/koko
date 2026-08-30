@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetClose, SheetTitle } from "@/components/ui/sheet";
 import { Logo } from "@/components/brand/logo";
+import { FlowingMenu } from "@/components/layout/flowing-menu";
 import { primaryNav, contact } from "@/lib/nav";
-import { cn } from "@/lib/utils";
 
 /**
  * The site's primary navigation: a dark editorial panel that slides in from the
@@ -49,27 +49,9 @@ export function MenuPanel({
           </SheetClose>
         </div>
 
-        <nav className="mt-10 flex flex-1 flex-col px-6">
-          {primaryNav.map((item, i) => {
-            const active =
-              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                style={{ animationDelay: `${60 * i + 80}ms` }}
-                className={cn(
-                  "w-fit py-2.5 font-heading text-2xl leading-tight text-cocoa-foreground/85 transition-colors hover:text-rose sm:text-[1.75rem]",
-                  "animate-in fade-in slide-in-from-right-4 fill-mode-both motion-reduce:animate-none",
-                  active && "text-rose underline decoration-1 underline-offset-8",
-                )}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="mt-6 flex-1 overflow-hidden">
+          <FlowingMenu items={primaryNav} />
+        </div>
 
         <div className="border-t border-cocoa-foreground/15 px-6 py-6 text-cocoa-foreground/70">
           <div className="flex gap-6 text-sm">
