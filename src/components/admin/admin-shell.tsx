@@ -136,7 +136,14 @@ export function AdminShell({
   const [collapsed, setCollapsed] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
+  const pathname = usePathname();
   const pageLabel = usePageLabel();
+
+  // Clear the nav filter once you've navigated somewhere.
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset a transient UI filter on route change
+    setQuery("");
+  }, [pathname]);
 
   React.useEffect(() => {
     try {

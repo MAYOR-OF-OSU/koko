@@ -221,32 +221,29 @@
   .admin-shell .animate-spin {
     animation-duration: 0.7s;
   }
-  /* One restrained first-paint cascade (opt in with .admin-stagger). */
+  /* One restrained first-paint cascade (opt in with .admin-stagger).
+     @starting-style so it degrades to "just visible" where unsupported —
+     never a stuck opacity:0. */
   .admin-stagger > * {
-    animation: admin-rise 0.28s var(--ease-out, ease-out) both;
+    transition:
+      opacity 0.28s var(--ease-out),
+      transform 0.28s var(--ease-out);
   }
   .admin-stagger > *:nth-child(2) {
-    animation-delay: 0.05s;
+    transition-delay: 0.05s;
   }
   .admin-stagger > *:nth-child(3) {
-    animation-delay: 0.1s;
+    transition-delay: 0.1s;
   }
-  .admin-stagger > *:nth-child(4) {
-    animation-delay: 0.15s;
-  }
-  .admin-stagger > *:nth-child(n + 5) {
-    animation-delay: 0.18s;
+  .admin-stagger > *:nth-child(n + 4) {
+    transition-delay: 0.15s;
   }
 }
 
-@keyframes admin-rise {
-  from {
+@starting-style {
+  .admin-stagger > * {
     opacity: 0;
     transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
   }
 }
 
@@ -255,7 +252,7 @@
     transform: none;
   }
   .admin-stagger > * {
-    animation: none;
+    transition: none;
   }
 }
 
