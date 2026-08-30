@@ -1,0 +1,8 @@
+# Doppler project config. Run `doppler setup` once, then:
+#   doppler run -- pnpm dev
+#   doppler run -- pnpm build
+#
+# Locally you can skip Doppler entirely and use .env (see .env.example).
+setup:
+  project: timis-jewels
+  config: dev

@@ -1,0 +1,305 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------ *
+ * Timi's Jewels — purple, light-only.
+ * #6E3482 deep (primary / text CTAs) · #A56ABD orchid (secondary) ·
+ * #E7DBEF lavender (surfaces). Ink = plum-black. No gold.
+ * Token NAMES kept (--rose, --accent-gold, --cocoa…) so consumers don't
+ * need editing — only the values below changed.
+ * ------------------------------------------------------------------ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-sans: var(--font-outfit);
+  --font-heading: var(--font-fraunces);
+  --font-mono: var(--font-geist-mono);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* brand-specific */
+  --color-rose: var(--rose);
+  --color-rose-deep: var(--rose-deep);
+  --color-cocoa: var(--cocoa);
+  --color-cocoa-foreground: var(--cocoa-foreground);
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-metal: var(--accent-metal);
+  /* legacy aliases so older markup keeps working during the restyle */
+  --color-brand-deep: var(--cocoa);
+  --color-surface-deep: var(--cocoa);
+  --color-surface-deep-foreground: var(--cocoa-foreground);
+  --color-brand-violet: var(--rose);
+  --color-brand-magenta: var(--rose-deep);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.6);
+  --radius-2xl: calc(var(--radius) * 2.2);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 3.6);
+}
+
+:root {
+  --background: oklch(0.986 0.005 315);
+  --foreground: oklch(0.2 0.03 313);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.03 313);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.03 313);
+  --primary: oklch(0.4 0.15 313);
+  --primary-foreground: oklch(0.99 0.004 315);
+  --secondary: oklch(0.955 0.016 315);
+  --secondary-foreground: oklch(0.35 0.1 313);
+  --muted: oklch(0.955 0.014 315);
+  --muted-foreground: oklch(0.47 0.035 313);
+  --accent: oklch(0.92 0.028 315);
+  --accent-foreground: oklch(0.35 0.11 313);
+  --destructive: oklch(0.577 0.22 25);
+  --border: oklch(0.9 0.016 315);
+  --input: oklch(0.9 0.016 315);
+  --ring: oklch(0.4 0.15 313);
+
+  --chart-1: oklch(0.4 0.15 313);
+  --chart-2: oklch(0.58 0.13 315);
+  --chart-3: oklch(0.72 0.1 315);
+  --chart-4: oklch(0.5 0.12 300);
+  --chart-5: oklch(0.83 0.06 315);
+
+  --radius: 0.375rem;
+
+  --sidebar: oklch(0.986 0.005 315);
+  --sidebar-foreground: oklch(0.2 0.03 313);
+  --sidebar-primary: oklch(0.4 0.15 313);
+  --sidebar-primary-foreground: oklch(0.99 0.004 315);
+  --sidebar-accent: oklch(0.955 0.016 315);
+  --sidebar-accent-foreground: oklch(0.35 0.1 313);
+  --sidebar-border: oklch(0.9 0.016 315);
+  --sidebar-ring: oklch(0.4 0.15 313);
+
+  /* brand (names kept; values now purple) */
+  --rose: oklch(0.58 0.13 315); /* #A56ABD orchid */
+  --rose-deep: oklch(0.4 0.15 313); /* #6E3482 deep */
+  --cocoa: oklch(0.27 0.09 313); /* deep-purple dark surface */
+  --cocoa-foreground: oklch(0.96 0.006 315);
+  --accent-gold: oklch(0.58 0.13 315); /* orchid (gold retired) */
+  --accent-metal: oklch(0.58 0.13 315);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    /* stop any wide child (image rails, big display type) from scrolling the
+       whole page — the horizontal rails clip/scroll internally instead.
+       `clip` (not `hidden`) keeps `position: sticky` working. */
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, .font-heading {
+    font-family: var(--font-heading), ui-serif, Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--rose) 30%, transparent);
+  }
+}
+
+@layer components {
+  /* Hover-fill button: label + a gold wipe from the left on hover. */
+  .btn-fill {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .btn-fill::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--accent-gold);
+    transform: translateX(-101%);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-fill:hover::before,
+  .btn-fill:focus-visible::before {
+    transform: translateX(0);
+  }
+
+  /* Thin gold divider used across sections. */
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in oklch, var(--accent-gold) 55%, transparent),
+      transparent
+    );
+  }
+
+  /* Small uppercase eyebrow label. */
+  .eyebrow {
+    font-family: var(--font-sans), sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .pause-on-hover:hover {
+    animation-play-state: paused;
+  }
+  /* hide scrollbar on horizontal rails */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Ken Burns — a slow drift on the active hero image */
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+.animate-kenburns {
+  animation: kenburns 14s ease-out both;
+}
+
+/* Product-card sheen — a soft light sweep across the image on hover */
+.card-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+.group:hover .card-sheen::after {
+  transform: translateX(130%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns {
+    animation: none;
+  }
+  .card-sheen::after {
+    display: none;
+  }
+}
+
+/* Scroll reveal — only elements JS marks [data-pending] are ever hidden. */
+[data-reveal] {
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal][data-pending] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+[data-reveal][data-shown] {
+  opacity: 1;
+  transform: none;
+}
+.reveal-group[data-pending] > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-group[data-shown] > * {
+  opacity: 1;
+  transform: none;
+}
+.reveal-group[data-shown] > *:nth-child(2) {
+  transition-delay: 0.06s;
+}
+.reveal-group[data-shown] > *:nth-child(3) {
+  transition-delay: 0.12s;
+}
+.reveal-group[data-shown] > *:nth-child(4) {
+  transition-delay: 0.18s;
+}
+.reveal-group[data-shown] > *:nth-child(5) {
+  transition-delay: 0.24s;
+}
+.reveal-group[data-shown] > *:nth-child(n + 6) {
+  transition-delay: 0.3s;
+}

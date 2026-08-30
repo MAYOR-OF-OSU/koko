@@ -1,0 +1,28 @@
+# Local PostgreSQL for development.
+#
+#   pnpm db:up      # start Postgres (creates the timis_jewels database)
+#   pnpm db:push    # apply the Prisma schema
+#   pnpm db:seed    # admin user + sample data
+#
+# Connection: postgresql://postgres:postgres@localhost:5432/timis_jewels
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: timis_jewels
+    ports:
+      - "5432:5432"
+    volumes:
+      - timis-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d timis_jewels"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  timis-postgres:

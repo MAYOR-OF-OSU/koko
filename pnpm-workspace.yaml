@@ -1,0 +1,9 @@
+allowBuilds:
+  '@prisma/engines': true
+  prisma: true
+  esbuild: true
+  msgpackr-extract: false
+  sharp: false
+  unrs-resolver: false
+  workerd: false
+  '@prisma/client': true

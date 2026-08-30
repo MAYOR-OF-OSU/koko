@@ -1,0 +1,413 @@
+// Timi's Jewels — Prisma schema (PostgreSQL).
+// Money is stored as integer kobo everywhere (1 NGN = 100 kobo).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------------------------------
+// Auth (BetterAuth core + admin plugin)
+// ----------------------------------------------------------------------------
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  image         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // admin plugin
+  role       String    @default("client") // "client" | "admin"
+  banned     Boolean   @default(false)
+  banReason  String?
+  banExpires DateTime?
+
+  sessions Session[]
+  accounts Account[]
+
+  addresses Address[]
+  wishlist  WishlistItem[]
+  orders    Order[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+
+  userId         String
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy String?
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  issuer                String?
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+// ----------------------------------------------------------------------------
+// Catalog
+// ----------------------------------------------------------------------------
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  blurb     String?
+  image     String?
+  sortOrder Int       @default(0)
+  products  Product[]
+
+  @@map("category")
+}
+
+enum ProductStatus {
+  draft
+  active
+  archived
+}
+
+model Product {
+  id            String        @id @default(cuid())
+  name          String
+  slug          String        @unique
+  description   String?
+  priceKobo     Int
+  compareAtKobo Int?
+  status        ProductStatus @default(active)
+  featured      Boolean       @default(false)
+  rating        Float         @default(5)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  images   ProductImage[]
+  variants ProductVariant[]
+  wishedBy WishlistItem[]
+
+  @@index([categoryId])
+  @@map("product")
+}
+
+model ProductImage {
+  id          String  @id @default(cuid())
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url         String
+  alt         String?
+  sortOrder   Int     @default(0)
+  width       Int?
+  height      Int?
+  blurDataUrl String?
+
+  @@index([productId])
+  @@map("product_image")
+}
+
+model ProductVariant {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String
+  sku       String? @unique
+  priceKobo Int?
+  stock     Int     @default(0)
+  options   Json?
+
+  @@index([productId])
+  @@map("product_variant")
+}
+
+// ----------------------------------------------------------------------------
+// Orders / customer data
+// ----------------------------------------------------------------------------
+
+enum OrderStatus {
+  pending
+  paid
+  fulfilled
+  cancelled
+}
+
+/// Delivery progress the customer sees on the tracking page. Distinct from the
+/// financial `status` above.
+enum FulfillmentStage {
+  received
+  packaged
+  dispatched
+  in_transit
+  arriving
+  ready_pickup
+  delivered
+}
+
+enum DeliveryMethod {
+  delivery
+  pickup
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  reference       String      @unique
+  status          OrderStatus @default(pending)
+  email           String
+  currency        String      @default("NGN")
+  subtotalKobo    Int
+  shippingKobo    Int         @default(0)
+  totalKobo       Int
+  shippingAddress Json
+  paystackRef     String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // payment
+  paidAt      DateTime?
+  paymentNote String? // note left when an order is resolved paid manually (off-Paystack)
+
+  // delivery tracking
+  fulfillmentStage FulfillmentStage @default(received)
+  deliveryMethod   DeliveryMethod   @default(delivery)
+  stageNote        String?
+  estimatedReadyAt DateTime?
+  stageUpdatedAt   DateTime?
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  items OrderItem[]
+
+  @@index([userId])
+  @@map("order")
+}
+
+model OrderItem {
+  id            String  @id @default(cuid())
+  orderId       String
+  order         Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId     String?
+  variantId     String?
+  name          String
+  unitPriceKobo Int
+  qty           Int
+
+  @@index([orderId])
+  @@map("order_item")
+}
+
+model Address {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName  String
+  phone     String
+  street    String
+  city      String
+  state     String
+  country   String  @default("Nigeria")
+  isDefault Boolean @default(false)
+
+  @@index([userId])
+  @@map("address")
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@map("wishlist_item")
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("newsletter_subscriber")
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("contact_message")
+}
+
+// ----------------------------------------------------------------------------
+// CMS — editable site content
+// ----------------------------------------------------------------------------
+
+/// One row per content block: home.hero, home.marquee, home.promo, home.story,
+/// home.lookbook, pages.about, pages.faq, settings.store. `value` shape is
+/// defined in src/lib/site-content-defaults.ts.
+model SiteSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("site_setting")
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  location  String?
+  quote     String
+  rating    Int      @default(5)
+  published Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@map("testimonial")
+}
+
+model Announcement {
+  id        String  @id @default(cuid())
+  text      String
+  active    Boolean @default(true)
+  sortOrder Int     @default(0)
+
+  @@map("announcement")
+}
+
+enum JournalStatus {
+  draft
+  published
+}
+
+model JournalPost {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  excerpt     String?
+  coverImage  String?
+  contentHtml String        @default("")
+  status      JournalStatus @default(draft)
+  publishedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("journal_post")
+}
+
+enum StockAlertStatus {
+  open
+  resolved
+}
+
+/// Low-stock notification raised by staff (or the system) for the admin.
+model StockAlert {
+  id          String           @id @default(cuid())
+  productId   String
+  productName String
+  variantName String?
+  stock       Int
+  note        String?
+  status      StockAlertStatus @default(open)
+  raisedById  String?
+  raisedBy    String? // email/name snapshot of who raised it
+  createdAt   DateTime         @default(now())
+  resolvedAt  DateTime?
+
+  @@index([status])
+  @@map("stock_alert")
+}
+
+// ----------------------------------------------------------------------------
+// Media library — images + videos for the storefront and CMS
+// ----------------------------------------------------------------------------
+
+enum MediaKind {
+  image
+  video
+}
+
+model MediaAsset {
+  id          String    @id @default(cuid())
+  kind        MediaKind @default(image)
+  url         String
+  name        String
+  mime        String?
+  sizeBytes   Int?
+  width       Int?
+  height      Int?
+  source      String    @default("url") // "url" | "uploaded"
+  createdById String?
+  createdBy   String? // email snapshot
+  createdAt   DateTime  @default(now())
+
+  @@index([kind])
+  @@index([createdAt])
+  @@map("media_asset")
+}
+
+// ----------------------------------------------------------------------------
+// Audit log — sign-ins and every mutating admin action
+// ----------------------------------------------------------------------------
+
+model AuditEvent {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actorEmail String?
+  actorRole  String?
+  action     String // e.g. "auth.login", "product.update", "order.fulfilment"
+  target     String? // human label of the affected thing
+  meta       Json?
+  ip         String?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([action])
+  @@map("audit_event")
+}

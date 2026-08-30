@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480">
+  <g fill="#000000">
+    <!-- T -->
+    <rect x="60" y="120" width="200" height="46" rx="6"/>
+    <rect x="137" y="120" width="46" height="240" rx="6"/>
+    <!-- J -->
+    <rect x="300" y="120" width="46" height="150" rx="6"/>
+    <path d="M300 250 h46 v20 a70 70 0 0 1 -140 0 v-6 h46 v6 a24 24 0 0 0 48 0 z"/>
+    <!-- jewel -->
+    <path d="M323 74 l26 26 -26 26 -26 -26 z"/>
+  </g>
+</svg>
