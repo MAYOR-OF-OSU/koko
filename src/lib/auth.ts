@@ -11,8 +11,9 @@ const googleProvider =
     : undefined;
 
 // Accept requests from the configured site URL plus the Vercel-provided origins
-// (this deployment and the production alias), so auth still works when
-// BETTER_AUTH_URL / NEXT_PUBLIC_SITE_URL haven't been set in the dashboard.
+// (this deployment, the production alias, and any *.vercel.app preview), so auth
+// still works when BETTER_AUTH_URL / NEXT_PUBLIC_SITE_URL haven't been set — or
+// have been set with a trailing slash / wrong casing — in the dashboard.
 const trustedOrigins = [
   ...new Set(
     [
@@ -21,6 +22,7 @@ const trustedOrigins = [
       process.env.VERCEL_PROJECT_PRODUCTION_URL &&
         `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
       process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
+      process.env.VERCEL && "https://*.vercel.app",
     ].filter(Boolean) as string[],
   ),
 ];
