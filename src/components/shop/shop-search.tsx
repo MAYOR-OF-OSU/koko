@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Search } from "lucide-react";
+import { Search } from "@/components/ui/icon";
 
 export function ShopSearch() {
   const router = useRouter();

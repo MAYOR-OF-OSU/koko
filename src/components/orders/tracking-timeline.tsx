@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check } from "@/components/ui/icon";
 import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 

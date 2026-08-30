@@ -19,7 +19,7 @@ import {
   Settings,
   CircleUser,
   type LucideIcon,
-} from "lucide-react";
+} from "@/components/ui/icon";
 import type { Permission } from "@/lib/roles";
 
 export type AdminLink = {

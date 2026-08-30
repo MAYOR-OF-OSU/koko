@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Bold, Italic, List, ListOrdered, Heading2, Quote, Undo2, Redo2 } from "lucide-react";
+import { Bold, Italic, List, ListOrdered, Heading2, Quote, Undo2, Redo2 } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 
 function Btn({

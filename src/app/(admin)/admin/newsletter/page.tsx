@@ -1,4 +1,4 @@
-import { Download, Mail } from "lucide-react";
+import { Download, Mail } from "@/components/ui/icon";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/format";
 import { AdminPage, DbDown, EmptyState, Table, THead, TH, TR, TD } from "@/components/admin/ui";

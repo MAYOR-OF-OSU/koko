@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { Mail, Lock, User, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Mail, Lock, User, Eye, EyeOff, Loader2 } from "@/components/ui/icon";
 import { signIn, signUp, authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 

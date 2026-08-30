@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Upload, Link as LinkIcon, Copy, Trash2, Loader2 } from "lucide-react";
+import { Upload, Link as LinkIcon, Copy, Trash2, Loader2 } from "@/components/ui/icon";
 import { addMediaByUrl, deleteMedia, type MediaAssetLite } from "@/server/actions/media";
 import { uploadMedia } from "@/lib/media-client";
 import { Field, TextInput, SaveButton, useAction, inputClass } from "@/components/admin/form";

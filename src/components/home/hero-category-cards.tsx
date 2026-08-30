@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "@/components/ui/icon";
 import { categories } from "@/lib/mock-data";
 
 export function HeroCategoryCards() {

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { X } from "lucide-react";
+import { X } from "@/components/ui/icon";
 import { Sheet, SheetContent, SheetClose, SheetTitle } from "@/components/ui/sheet";
 import { Logo } from "@/components/brand/logo";
 import { FlowingMenu } from "@/components/layout/flowing-menu";

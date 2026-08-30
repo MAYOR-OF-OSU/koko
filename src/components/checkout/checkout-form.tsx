@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Info, Loader2, ShieldCheck } from "lucide-react";
+import { Info, Loader2, ShieldCheck } from "@/components/ui/icon";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

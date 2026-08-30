@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Star, Trash2, Pencil } from "lucide-react";
+import { Star, Trash2, Pencil } from "@/components/ui/icon";
 import { toast } from "sonner";
 import { deleteProduct, toggleProductFeatured } from "@/server/actions/product";
 import { useAction } from "@/components/admin/form";

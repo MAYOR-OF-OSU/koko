@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "@/components/ui/icon";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatNaira, formatDate } from "@/lib/format";

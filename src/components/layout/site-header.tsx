@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, User } from "lucide-react";
+import { Menu, Search, User } from "@/components/ui/icon";
 import { Logo } from "@/components/brand/logo";
 import { CartButton } from "@/components/cart/cart-button";
 import { MenuPanel } from "@/components/layout/menu-panel";

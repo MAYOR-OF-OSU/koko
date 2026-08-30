@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { RefreshCw, Loader2, CheckCircle2, Mail } from "lucide-react";
+import { RefreshCw, Loader2, CheckCircle2, Mail } from "@/components/ui/icon";
 import {
   verifyOrderPayment,
   resolveOrderPaymentManually,

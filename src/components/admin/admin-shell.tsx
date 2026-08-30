@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, PanelLeftClose, PanelLeft, LogOut, ExternalLink, Search, Bell } from "lucide-react";
+import { Menu, PanelLeftClose, PanelLeft, LogOut, ExternalLink, Search, Bell } from "@/components/ui/icon";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Logo } from "@/components/brand/logo";
 import { signOut } from "@/lib/auth-client";

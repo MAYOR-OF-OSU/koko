@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { toast } from "sonner";
-import { LinkIcon, Upload, Images, X, Loader2 } from "lucide-react";
+import { LinkIcon, Upload, Images, X, Loader2 } from "@/components/ui/icon";
 import { listMedia, type MediaAssetLite } from "@/server/actions/media";
 import { uploadMedia } from "@/lib/media-client";
 import { Field, TextInput, inputClass } from "@/components/admin/form";

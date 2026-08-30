@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { toast } from "sonner";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/motion/reveal";
 

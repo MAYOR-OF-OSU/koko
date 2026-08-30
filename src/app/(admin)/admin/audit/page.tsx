@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { guardPage } from "@/lib/admin-guard";
 import { ROLE_LABEL, type Role } from "@/lib/roles";
 import { formatDate, timeAgo } from "@/lib/format";
-import { ScrollText } from "lucide-react";
+import { ScrollText } from "@/components/ui/icon";
 import { AdminPage, DbDown, EmptyState, Table, THead, TH, TR, TD } from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";

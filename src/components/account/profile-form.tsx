@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2 } from "@/components/ui/icon";
 import { authClient } from "@/lib/auth-client";
 
 export function ProfileForm({ name, email }: { name: string; email: string }) {

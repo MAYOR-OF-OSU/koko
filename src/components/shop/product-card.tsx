@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Heart, Star } from "lucide-react";
+import { Heart, Star } from "@/components/ui/icon";
 import { toast } from "sonner";
 import type { MockProduct } from "@/lib/mock-data";
 import { getCategory } from "@/lib/mock-data";

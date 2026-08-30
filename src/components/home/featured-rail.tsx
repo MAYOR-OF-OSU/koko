@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "@/components/ui/icon";
 
 export function FeaturedRail({ children }: { children: React.ReactNode }) {
   const ref = React.useRef<HTMLDivElement>(null);

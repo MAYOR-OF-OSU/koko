@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { BellRing, Check } from "lucide-react";
+import { BellRing, Check } from "@/components/ui/icon";
 import { saveStock, raiseStockAlert } from "@/server/actions/stock";
 import { useAction, inputClass } from "@/components/admin/form";
 import { Table, THead, TH, TR, TD } from "@/components/admin/ui";

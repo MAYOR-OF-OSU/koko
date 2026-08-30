@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus } from "@/components/ui/icon";
 import { saveAnnouncement, deleteAnnouncement } from "@/server/actions/announcement";
 import { TextInput, useAction } from "@/components/admin/form";
 import { Panel, EmptyState } from "@/components/admin/ui";

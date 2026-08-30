@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MapPin, Phone } from "lucide-react";
+import { MapPin, Phone } from "@/components/ui/icon";
 import { PageHero } from "@/components/layout/page-hero";
 import { ContactForm } from "@/components/contact/contact-form";
 import { getStoreSettings } from "@/lib/site-content";

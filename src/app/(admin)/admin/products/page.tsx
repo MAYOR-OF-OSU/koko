@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Plus, Package } from "lucide-react";
+import { Plus, Package } from "@/components/ui/icon";
 import { prisma } from "@/lib/prisma";
 import { formatNaira } from "@/lib/format";
 import { AdminPage, DbDown, EmptyState, StatusBadge, Table, THead, TH, TR, TD } from "@/components/admin/ui";

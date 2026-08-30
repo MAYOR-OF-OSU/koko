@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Database } from "lucide-react";
+import { Database } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 import { Sparkline } from "@/components/admin/mini-chart";
 

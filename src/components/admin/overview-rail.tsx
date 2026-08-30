@@ -1,4 +1,4 @@
-import { ShoppingCart, Inbox, Package, Newspaper, BellRing, ScrollText } from "lucide-react";
+import { ShoppingCart, Inbox, Package, Newspaper, BellRing, ScrollText } from "@/components/ui/icon";
 import { Panel, CardHeading } from "@/components/admin/ui";
 import { timeAgo } from "@/lib/format";
 

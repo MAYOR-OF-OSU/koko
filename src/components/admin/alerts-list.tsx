@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { Check } from "@/components/ui/icon";
 import { resolveStockAlert } from "@/server/actions/stock";
 import { useAction } from "@/components/admin/form";
 import { timeAgo } from "@/lib/format";

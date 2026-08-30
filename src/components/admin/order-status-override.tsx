@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { ShieldAlert } from "lucide-react";
+import { ShieldAlert } from "@/components/ui/icon";
 import { overrideOrderStatus, type OrderStatus } from "@/server/actions/order";
 import { Panel } from "@/components/admin/ui";
 import { Field, Select, TextArea, SaveButton, useAction } from "@/components/admin/form";

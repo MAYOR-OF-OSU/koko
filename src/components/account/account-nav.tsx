@@ -10,7 +10,7 @@ import {
   MapPin,
   LogOut,
   Shield,
-} from "lucide-react";
+} from "@/components/ui/icon";
 import { signOut } from "@/lib/auth-client";
 import { logSignOut } from "@/server/actions/staff";
 import { isStaff } from "@/lib/roles";

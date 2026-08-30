@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, Newspaper } from "lucide-react";
+import { Plus, Newspaper } from "@/components/ui/icon";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/format";
 import { AdminPage, DbDown, EmptyState, StatusBadge, Table, THead, TH, TR, TD } from "@/components/admin/ui";

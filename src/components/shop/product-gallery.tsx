@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ZoomIn } from "lucide-react";
+import { ZoomIn } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 import { BLUR_DATA_URL } from "@/lib/image-loader";
 

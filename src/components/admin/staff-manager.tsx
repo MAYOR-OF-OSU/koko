@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { UserPlus } from "lucide-react";
+import { UserPlus } from "@/components/ui/icon";
 import {
   setUserRole,
   createStaffUser,

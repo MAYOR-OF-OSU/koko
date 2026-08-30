@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { Star } from "@/components/ui/icon";
 import { ProductGallery } from "@/components/shop/product-gallery";
 import { AddToCart } from "@/components/shop/add-to-cart";
 import { ProductTabs } from "@/components/shop/product-tabs";

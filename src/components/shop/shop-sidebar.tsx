@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "@/components/ui/icon";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { categories } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";

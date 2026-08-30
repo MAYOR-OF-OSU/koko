@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "@/components/ui/icon";
 import { useCart, selectCount } from "@/lib/cart-store";
 import { useHydrated } from "@/lib/use-hydrated";
 import { cn } from "@/lib/utils";

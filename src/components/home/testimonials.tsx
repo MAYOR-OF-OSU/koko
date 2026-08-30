@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Star } from "@/components/ui/icon";
 import { getTestimonials } from "@/lib/site-content";
 import { Reveal, RevealItem } from "@/components/motion/reveal";
 

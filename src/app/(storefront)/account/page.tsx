@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { headers } from "next/headers";
-import { ShoppingBag, Heart, Package, ArrowRight } from "lucide-react";
+import { ShoppingBag, Heart, Package, ArrowRight } from "@/components/ui/icon";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatNaira, timeAgo } from "@/lib/format";

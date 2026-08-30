@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2 } from "@/components/ui/icon";
 import { PageHero } from "@/components/layout/page-hero";
 import { InteractiveHoverLink } from "@/components/ui/interactive-hover-button";
 import { useCart, selectSubtotal } from "@/lib/cart-store";

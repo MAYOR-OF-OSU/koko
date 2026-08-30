@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "@/components/ui/icon";
 import { saveSetting } from "@/server/actions/content";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import { Field, TextInput, TextArea, SaveButton, useAction } from "@/components/admin/form";

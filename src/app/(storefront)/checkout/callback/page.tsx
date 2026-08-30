@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, XCircle, AlertCircle } from "lucide-react";
+import { CheckCircle2, XCircle, AlertCircle } from "@/components/ui/icon";
 import { PageHero } from "@/components/layout/page-hero";
 import { InteractiveHoverLink } from "@/components/ui/interactive-hover-button";
 import { ClearCartOnMount } from "@/components/checkout/clear-cart-on-mount";

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus } from "@/components/ui/icon";
 import { createProduct, updateProduct, type ProductInput } from "@/server/actions/product";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import { MediaField } from "@/components/admin/media-field";

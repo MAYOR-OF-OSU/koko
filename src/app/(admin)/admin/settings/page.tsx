@@ -1,4 +1,4 @@
-import { Check, X } from "lucide-react";
+import { Check, X } from "@/components/ui/icon";
 import { AdminPage, Panel } from "@/components/admin/ui";
 import { getStoreSettings } from "@/lib/site-content";
 import { features } from "@/lib/env";

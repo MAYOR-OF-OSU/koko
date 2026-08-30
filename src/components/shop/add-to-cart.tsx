@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { toast } from "sonner";
-import { Heart, Truck, RefreshCw, ShieldCheck } from "lucide-react";
+import { Heart, Truck, RefreshCw, ShieldCheck } from "@/components/ui/icon";
 import { useCart } from "@/lib/cart-store";
 import type { MockProduct } from "@/lib/mock-data";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";

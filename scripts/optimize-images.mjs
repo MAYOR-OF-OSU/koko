@@ -1,6 +1,6 @@
 // Re-encode committed raster images in public/ — smaller files, quality retained.
 // Run once after adding new photos:  node scripts/optimize-images.mjs
-import { readdir, readFile, writeFile, stat } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import sharp from "sharp";

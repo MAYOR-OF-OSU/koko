@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Trash2 } from "lucide-react";
+import { Trash2 } from "@/components/ui/icon";
 import { saveTestimonial, deleteTestimonial } from "@/server/actions/testimonial";
 import { Field, TextInput, TextArea, Select, SaveButton, useAction } from "@/components/admin/form";
 import { Panel, EmptyState } from "@/components/admin/ui";

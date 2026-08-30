@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { formatNaira, formatDate } from "@/lib/format";
-import { Users } from "lucide-react";
+import { Users } from "@/components/ui/icon";
 import { AdminPage, DbDown, EmptyState, Table, THead, TH, TR, TD } from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { X } from "lucide-react";
+import { X } from "@/components/ui/icon";
 
 /** Stable key for the current message set so a new promo re-shows the bar. */
 function keyFor(messages: string[]) {
@@ -18,6 +18,7 @@ export function AnnouncementBarClient({ messages }: { messages: string[] }) {
 
   React.useEffect(() => {
     try {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot restore of a dismissed state
       if (localStorage.getItem(storageKey) === "1") setHidden(true);
     } catch {
       /* private mode / blocked storage — just show it */

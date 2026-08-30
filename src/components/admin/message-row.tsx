@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Trash2, Mail, MailOpen } from "lucide-react";
+import { Trash2, Mail, MailOpen } from "@/components/ui/icon";
 import { markMessageRead, deleteMessage } from "@/server/actions/message";
 import { useAction } from "@/components/admin/form";
 import { formatDate } from "@/lib/format";

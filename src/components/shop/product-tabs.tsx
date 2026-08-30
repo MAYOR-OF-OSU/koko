@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { Check } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 
 const TABS = ["Details", "Materials", "Size & Fit", "Shipping & Returns"] as const;
