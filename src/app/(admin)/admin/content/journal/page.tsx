@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Newspaper } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/format";
 import { AdminPage, DbDown, EmptyState, StatusBadge, Table, THead, TH, TR, TD } from "@/components/admin/ui";
@@ -32,7 +32,11 @@ export default async function AdminJournalPage() {
       }
     >
       {posts.length === 0 ? (
-        <EmptyState title="No posts yet" hint="Write a piece for the /journal page." />
+        <EmptyState
+          icon={<Newspaper className="size-5" />}
+          title="No posts yet"
+          hint="Write a piece for the /journal page."
+        />
       ) : (
         <Table>
           <THead>

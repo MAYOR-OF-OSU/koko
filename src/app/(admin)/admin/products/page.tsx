@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Plus } from "lucide-react";
+import { Plus, Package } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { formatNaira } from "@/lib/format";
 import { AdminPage, DbDown, EmptyState, StatusBadge, Table, THead, TH, TR, TD } from "@/components/admin/ui";
@@ -38,7 +38,11 @@ export default async function AdminProductsPage() {
       }
     >
       {products.length === 0 ? (
-        <EmptyState title="No products yet" hint="Create your first product to see it in the shop." />
+        <EmptyState
+          icon={<Package className="size-5" />}
+          title="No products yet"
+          hint="Create your first product to see it in the shop."
+        />
       ) : (
         <Table>
           <THead>

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { guardPage } from "@/lib/admin-guard";
 import { ROLE_LABEL, type Role } from "@/lib/roles";
 import { formatDate, timeAgo } from "@/lib/format";
+import { ScrollText } from "lucide-react";
 import { AdminPage, DbDown, EmptyState, Table, THead, TH, TR, TD } from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
@@ -82,7 +83,11 @@ export default async function AdminAuditPage({ searchParams }: PageProps<"/admin
       description={`${total} event${total === 1 ? "" : "s"} — sign-ins and every change made in the admin.`}
     >
       {events.length === 0 ? (
-        <EmptyState title="No activity yet" hint="Sign-ins and admin changes will show up here." />
+        <EmptyState
+          icon={<ScrollText className="size-5" />}
+          title="No activity yet"
+          hint="Sign-ins and admin changes will show up here."
+        />
       ) : (
         <>
           <Table>

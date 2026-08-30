@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Plus } from "lucide-react";
+import { Plus, Tags } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { AdminPage, DbDown, EmptyState, Table, THead, TH, TR, TD } from "@/components/admin/ui";
 
@@ -35,7 +35,11 @@ export default async function AdminCategoriesPage() {
       }
     >
       {rows.length === 0 ? (
-        <EmptyState title="No categories yet" />
+        <EmptyState
+          icon={<Tags className="size-5" />}
+          title="No categories yet"
+          hint="Add a category to group products in the shop."
+        />
       ) : (
         <Table>
           <THead>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { formatNaira, formatDate } from "@/lib/format";
+import { Users } from "lucide-react";
 import { AdminPage, DbDown, EmptyState, Table, THead, TH, TR, TD } from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
@@ -35,7 +36,11 @@ export default async function AdminCustomersPage() {
   return (
     <AdminPage title="Customers" description={`${rows.length} registered`}>
       {rows.length === 0 ? (
-        <EmptyState title="No customers yet" />
+        <EmptyState
+          icon={<Users className="size-5" />}
+          title="No customers yet"
+          hint="Customer accounts show up here after their first sign-in."
+        />
       ) : (
         <Table>
           <THead>

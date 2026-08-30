@@ -1,4 +1,4 @@
-import { Download } from "lucide-react";
+import { Download, Mail } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/format";
 import { AdminPage, DbDown, EmptyState, Table, THead, TH, TR, TD } from "@/components/admin/ui";
@@ -33,7 +33,11 @@ export default async function AdminNewsletterPage() {
       }
     >
       {subs.length === 0 ? (
-        <EmptyState title="No subscribers yet" />
+        <EmptyState
+          icon={<Mail className="size-5" />}
+          title="No subscribers yet"
+          hint="Sign-ups from the storefront footer land here."
+        />
       ) : (
         <Table>
           <THead>

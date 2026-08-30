@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { formatNaira, formatDate } from "@/lib/format";
+import { ShoppingCart } from "lucide-react";
 import { AdminPage, DbDown, EmptyState, StatusBadge, Table, THead, TH, TR, TD } from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
@@ -49,7 +50,11 @@ export default async function AdminOrdersPage({ searchParams }: PageProps<"/admi
       </div>
 
       {orders.length === 0 ? (
-        <EmptyState title="No orders" hint="Orders appear here once online checkout is live." />
+        <EmptyState
+          icon={<ShoppingCart className="size-5" />}
+          title={status ? `No ${status} orders` : "No orders yet"}
+          hint="Orders appear here as customers check out."
+        />
       ) : (
         <Table>
           <THead>

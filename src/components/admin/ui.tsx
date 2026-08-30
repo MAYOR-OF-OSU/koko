@@ -18,8 +18,10 @@ export function AdminPage({
     <div>
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border pb-4 sm:items-end sm:pb-5">
         <div className="min-w-0">
-          <h1 className="font-heading text-xl sm:text-2xl">{title}</h1>
-          {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
+          <h1 className="font-heading text-xl text-balance sm:text-2xl">{title}</h1>
+          {description && (
+            <p className="mt-1 text-pretty text-sm text-muted-foreground">{description}</p>
+          )}
         </div>
         {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
       </div>
@@ -98,8 +100,8 @@ export function EmptyState({
             {icon}
           </div>
         )}
-        <p className="font-heading text-base">{title}</p>
-        {hint && <p className="mt-1 text-sm text-muted-foreground">{hint}</p>}
+        <p className="text-balance font-heading text-base">{title}</p>
+        {hint && <p className="mt-1 text-pretty text-sm text-muted-foreground">{hint}</p>}
       </div>
     </div>
   );
@@ -135,7 +137,7 @@ export function StatusBadge({ status }: { status: string }) {
   return (
     <span
       className={cn(
-        "inline-flex rounded-full px-2 py-0.5 text-[0.68rem] font-medium capitalize",
+        "inline-flex rounded-sm px-1.5 py-0.5 text-[0.68rem] font-medium capitalize",
         STATUS_STYLES[status] ?? "bg-muted text-muted-foreground",
       )}
     >
@@ -157,7 +159,9 @@ export function Table({ children, bare }: { children: ReactNode; bare?: boolean 
           : "rounded-lg border border-border bg-card",
       )}
     >
-      <table className="w-full min-w-[34rem] text-sm [&_tbody_tr]:transition-colors">{children}</table>
+      <table className="w-full min-w-[34rem] text-sm tabular-nums [&_tbody_tr]:transition-colors">
+        {children}
+      </table>
     </div>
   );
 }
