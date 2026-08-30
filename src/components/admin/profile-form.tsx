@@ -6,14 +6,12 @@ import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { updateMyProfile } from "@/server/actions/profile";
 import { MediaField } from "@/components/admin/media-field";
-import { Field, TextInput, TextArea, SaveButton, useAction } from "@/components/admin/form";
+import { Field, TextInput, SaveButton, useAction } from "@/components/admin/form";
 import { Panel } from "@/components/admin/ui";
 
 type Initial = {
   name: string;
   email: string;
-  phone: string;
-  bio: string;
   image: string;
 };
 
@@ -54,17 +52,7 @@ export function ProfileForm({ initial }: { initial: Initial }) {
               required
             />
           </Field>
-          <Field label="Phone">
-            <TextInput
-              value={v.phone}
-              onChange={(e) => set("phone", e.target.value)}
-              placeholder="+234…"
-            />
-          </Field>
         </div>
-        <Field label="Bio" hint="A short line about you.">
-          <TextArea value={v.bio} onChange={(e) => set("bio", e.target.value)} maxLength={400} />
-        </Field>
         <SaveButton pending={pending}>Save profile</SaveButton>
       </Panel>
     </form>

@@ -25,10 +25,6 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  // profile bio-data — editable by the user under /admin/profile
-  phone String?
-  bio   String?
-
   // admin plugin
   role       String    @default("client") // "client" | "admin"
   banned     Boolean   @default(false)

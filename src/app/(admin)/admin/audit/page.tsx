@@ -42,6 +42,8 @@ const ACTION_LABEL: Record<string, string> = {
   "stock.alert.resolve": "Resolved a low-stock alert",
   "staff.role": "Changed a user's role",
   "staff.create": "Added a team member",
+  "staff.remove": "Removed a team member",
+  "staff.delete": "Deleted a user account",
   "profile.update": "Updated their profile",
   "media.add": "Added media (URL)",
   "media.upload": "Uploaded media",

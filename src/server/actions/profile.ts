@@ -11,8 +11,6 @@ type Result = { ok: true } | { ok: false; error: string };
 const profileSchema = z.object({
   name: z.string().trim().min(2).max(80),
   email: z.string().trim().email().max(120),
-  phone: z.string().trim().max(30).optional(),
-  bio: z.string().trim().max(400).optional(),
   image: z.string().trim().max(500).optional(),
 });
 
@@ -36,8 +34,6 @@ export async function updateMyProfile(input: z.input<typeof profileSchema>): Pro
       data: {
         name: d.name,
         email: d.email,
-        phone: d.phone?.trim() || null,
-        bio: d.bio?.trim() || null,
         image: d.image?.trim() || null,
       },
     });

@@ -3,7 +3,12 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { UserPlus } from "lucide-react";
-import { setUserRole, createStaffUser } from "@/server/actions/staff";
+import {
+  setUserRole,
+  createStaffUser,
+  removeStaffMember,
+  deleteStaffAccount,
+} from "@/server/actions/staff";
 import { ROLES, STAFF_ROLES, ROLE_LABEL } from "@/lib/roles";
 import { Field, TextInput, Select, SaveButton, useAction } from "@/components/admin/form";
 import { Panel, CardHeading, Table, THead, TH, TR, TD } from "@/components/admin/ui";
@@ -37,6 +42,56 @@ function RoleSelect({ user, isSelf }: { user: StaffUser; isSelf: boolean }) {
         </option>
       ))}
     </Select>
+  );
+}
+
+function StaffRowActions({ user, isSelf }: { user: StaffUser; isSelf: boolean }) {
+  const router = useRouter();
+  const remove = useAction((id: string) => removeStaffMember(id), {
+    success: "Removed from the team",
+    onDone: () => router.refresh(),
+  });
+  const del = useAction((id: string) => deleteStaffAccount(id), {
+    success: "Account deleted",
+    onDone: () => router.refresh(),
+  });
+  const busy = remove.pending || del.pending;
+
+  return (
+    <div className="flex gap-3 whitespace-nowrap">
+      <button
+        type="button"
+        disabled={busy || isSelf}
+        title={isSelf ? "You can't remove yourself" : undefined}
+        onClick={() => {
+          if (
+            confirm(
+              `Remove ${user.name} from the team? They become a regular customer and lose admin access.`,
+            )
+          )
+            remove.run(user.id);
+        }}
+        className="text-sm text-muted-foreground transition hover:text-foreground disabled:opacity-40"
+      >
+        Remove
+      </button>
+      <button
+        type="button"
+        disabled={busy || isSelf}
+        title={isSelf ? "You can't delete yourself" : undefined}
+        onClick={() => {
+          if (
+            confirm(
+              `Permanently delete ${user.name}'s account? This removes their sign-in, saved addresses and wishlist. Past orders are kept but unlinked. This cannot be undone.`,
+            )
+          )
+            del.run(user.id);
+        }}
+        className="text-sm text-destructive transition hover:underline disabled:opacity-40"
+      >
+        Delete
+      </button>
+    </div>
   );
 }
 
@@ -114,6 +169,7 @@ export function StaffManager({ users, selfId }: { users: StaffUser[]; selfId: st
               <TH>Email</TH>
               <TH>Joined</TH>
               <TH>Role</TH>
+              <TH>Actions</TH>
             </TR>
           </THead>
           <tbody>
@@ -127,6 +183,9 @@ export function StaffManager({ users, selfId }: { users: StaffUser[]; selfId: st
                 <TD className="text-muted-foreground">{formatDate(u.createdAt)}</TD>
                 <TD>
                   <RoleSelect user={u} isSelf={u.id === selfId} />
+                </TD>
+                <TD>
+                  <StaffRowActions user={u} isSelf={u.id === selfId} />
                 </TD>
               </TR>
             ))}

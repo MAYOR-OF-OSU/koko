@@ -12,7 +12,7 @@ export default async function AdminProfilePage() {
   try {
     user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      select: { name: true, email: true, phone: true, bio: true, image: true },
+      select: { name: true, email: true, image: true },
     });
   } catch {
     return (
@@ -36,8 +36,6 @@ export default async function AdminProfilePage() {
           initial={{
             name: user.name ?? "",
             email: user.email ?? "",
-            phone: user.phone ?? "",
-            bio: user.bio ?? "",
             image: user.image ?? "",
           }}
         />
