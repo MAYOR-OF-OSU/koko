@@ -202,7 +202,7 @@ export default async function AdminOverview() {
       <div className="grid gap-6 lg:grid-cols-[1fr_19rem]">
         {/* main column */}
         <div className="space-y-6">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="admin-stagger grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <StatCard
               label="Revenue"
               value={formatNaira(stats.revenue)}

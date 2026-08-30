@@ -61,11 +61,11 @@ export function StatCard({
   return (
     <div className="rounded-lg border border-border bg-card p-5">
       <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">{label}</p>
-      <p className="mt-2 font-heading text-2xl">{value}</p>
+      <p className="mt-2 font-heading text-2xl tabular-nums">{value}</p>
       {(delta !== undefined || hint) && (
         <p className="mt-1 text-xs text-muted-foreground">
           {delta !== undefined && (
-            <span className={delta >= 0 ? "text-emerald-600" : "text-rose-deep"}>
+            <span className={cn("font-medium", delta >= 0 ? "text-emerald-600" : "text-rose-deep")}>
               {delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%
             </span>
           )}{" "}
@@ -81,11 +81,26 @@ export function StatCard({
   );
 }
 
-export function EmptyState({ title, hint }: { title: string; hint?: string }) {
+export function EmptyState({
+  title,
+  hint,
+  icon,
+}: {
+  title: string;
+  hint?: string;
+  icon?: ReactNode;
+}) {
   return (
-    <div className="rounded-lg border border-dashed border-border bg-card/50 p-8 text-center sm:p-12">
-      <p className="font-medium">{title}</p>
-      {hint && <p className="mt-1 text-sm text-muted-foreground">{hint}</p>}
+    <div className="rounded-lg border border-dashed border-border bg-card/50 px-6 py-10 text-center sm:py-14">
+      <div className="mx-auto max-w-sm">
+        {icon && (
+          <div className="mx-auto mb-3 grid size-10 place-items-center rounded-full bg-muted text-muted-foreground">
+            {icon}
+          </div>
+        )}
+        <p className="font-heading text-base">{title}</p>
+        {hint && <p className="mt-1 text-sm text-muted-foreground">{hint}</p>}
+      </div>
     </div>
   );
 }
@@ -142,7 +157,7 @@ export function Table({ children, bare }: { children: ReactNode; bare?: boolean 
           : "rounded-lg border border-border bg-card",
       )}
     >
-      <table className="w-full min-w-[34rem] text-sm">{children}</table>
+      <table className="w-full min-w-[34rem] text-sm [&_tbody_tr]:transition-colors">{children}</table>
     </div>
   );
 }

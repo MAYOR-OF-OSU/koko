@@ -26,7 +26,7 @@ export function Field({
 }
 
 export const inputClass =
-  "w-full rounded-md border border-border bg-card px-3 py-2 text-sm outline-none focus:border-foreground";
+  "w-full rounded-md border border-border bg-card px-3 py-2 text-sm outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-muted-foreground/70 focus:border-foreground focus-visible:ring-2 focus-visible:ring-ring/25 disabled:cursor-not-allowed disabled:opacity-60";
 
 export function TextInput(props: React.ComponentProps<"input">) {
   return <input {...props} className={cn(inputClass, props.className)} />;

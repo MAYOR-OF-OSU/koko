@@ -16,18 +16,29 @@ function NavList({
   role,
   collapsed,
   onNavigate,
+  query,
 }: {
   role: string;
   collapsed?: boolean;
   onNavigate?: () => void;
+  query?: string;
 }) {
   const pathname = usePathname();
+  const q = (query ?? "").trim().toLowerCase();
   const groups = adminNav
-    .map((g) => ({ ...g, links: g.links.filter((l) => can(role, l.permission)) }))
+    .map((g) => ({
+      ...g,
+      links: g.links.filter(
+        (l) => can(role, l.permission) && (!q || l.label.toLowerCase().includes(q)),
+      ),
+    }))
     .filter((g) => g.links.length > 0);
 
   return (
     <nav className="flex flex-1 flex-col gap-6 overflow-y-auto px-3 py-4">
+      {q && groups.length === 0 && (
+        <p className="px-3 text-sm text-muted-foreground">No matches for “{query}”.</p>
+      )}
       {groups.map((group, gi) => (
         <div key={group.title || gi}>
           {group.title && !collapsed && (
@@ -97,13 +108,16 @@ function usePageLabel() {
   return seg.charAt(0).toUpperCase() + seg.slice(1);
 }
 
-function SearchBox() {
+function SearchBox({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
     <div className="relative px-3 pb-3">
       <Search className="pointer-events-none absolute left-6 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
       <input
-        placeholder="Search…"
-        className="w-full rounded-full border border-border bg-secondary/60 py-2 pl-8 pr-3 text-xs outline-none focus:border-foreground"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Filter menu…"
+        aria-label="Filter menu"
+        className="w-full rounded-full border border-border bg-secondary/60 py-2 pl-8 pr-3 text-xs outline-none transition-[border-color,box-shadow] duration-150 focus:border-foreground focus-visible:ring-2 focus-visible:ring-ring/25"
       />
     </div>
   );
@@ -121,6 +135,7 @@ export function AdminShell({
   const role = (user.role ?? "client") as Role;
   const [collapsed, setCollapsed] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [query, setQuery] = React.useState("");
   const pageLabel = usePageLabel();
 
   React.useEffect(() => {
@@ -136,6 +151,7 @@ export function AdminShell({
       try {
         localStorage.setItem("tj-admin-collapsed", next ? "1" : "0");
       } catch {}
+      if (next) setQuery("");
       return next;
     });
   };
@@ -143,7 +159,7 @@ export function AdminShell({
   return (
     // Fill the viewport on desktop (sidebar + content well); on mobile just wrap the
     // content so short pages don't leave a tall empty band below the last card.
-    <div className="flex bg-secondary/30 lg:min-h-svh">
+    <div className="admin-shell flex bg-secondary/30 lg:min-h-svh">
       {/* desktop sidebar */}
       <aside
         className={cn(
@@ -156,8 +172,8 @@ export function AdminShell({
             <Logo variant={collapsed ? "monogram" : "lockup"} className={collapsed ? "h-7" : "h-6"} />
           </Link>
         </div>
-        {!collapsed && <SearchBox />}
-        <NavList role={role} collapsed={collapsed} />
+        {!collapsed && <SearchBox value={query} onChange={setQuery} />}
+        <NavList role={role} collapsed={collapsed} query={query} />
         <div className="border-t border-border p-3">
           <SignOutButton collapsed={collapsed} />
         </div>
@@ -186,9 +202,16 @@ export function AdminShell({
                 <Logo variant="lockup" className="h-6" />
               </SheetTitle>
               <div className="pt-3">
-                <SearchBox />
+                <SearchBox value={query} onChange={setQuery} />
               </div>
-              <NavList role={role} onNavigate={() => setMobileOpen(false)} />
+              <NavList
+                role={role}
+                query={query}
+                onNavigate={() => {
+                  setMobileOpen(false);
+                  setQuery("");
+                }}
+              />
               <div className="border-t border-border p-3">
                 <SignOutButton />
               </div>
@@ -205,14 +228,16 @@ export function AdminShell({
             <Link
               href="/"
               target="_blank"
-              className="hidden items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground sm:flex"
+              data-press
+              className="hidden items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground sm:flex"
             >
               <ExternalLink className="size-3.5" /> View site
             </Link>
             <Link
               href="/admin/alerts"
+              data-press
               aria-label={`Stock alerts${openAlerts ? ` (${openAlerts} open)` : ""}`}
-              className="relative grid size-8 place-items-center rounded-md text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+              className="relative grid size-8 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
               <Bell className="size-4" />
               {openAlerts > 0 && (
@@ -224,7 +249,8 @@ export function AdminShell({
             <Link
               href="/admin/profile"
               title="My profile"
-              className="flex items-center gap-2 rounded-md px-1 py-1 transition hover:bg-secondary"
+              data-press
+              className="flex items-center gap-2 rounded-md px-1 py-1 transition-colors hover:bg-secondary"
             >
               {user.image ? (
                 // eslint-disable-next-line @next/next/no-img-element

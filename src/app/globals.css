@@ -185,6 +185,78 @@
     text-transform: uppercase;
     color: var(--rose-deep);
   }
+
+  /* ---------------------------------------------------------------- *
+   * Admin dashboard — crisp, fast micro-interactions.
+   * A professional tool: no decorative motion, but every control
+   * answers the pointer (press) and the keyboard (focus ring).
+   * ---------------------------------------------------------------- */
+  .admin-shell {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .admin-shell :is(button, [type="submit"], a[data-press]) {
+    transition:
+      transform 0.14s var(--ease-out),
+      background-color 0.14s ease,
+      border-color 0.14s ease,
+      color 0.14s ease,
+      opacity 0.14s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .admin-shell :is(button, [type="submit"]):not(:disabled):active,
+    .admin-shell a[data-press]:active {
+      transform: scale(0.97);
+    }
+    /* Row tracking on data tables — pointer devices only. */
+    .admin-shell tbody tr:hover {
+      background-color: color-mix(in oklab, var(--secondary) 45%, transparent);
+    }
+  }
+  /* Keyboard-only focus ring — inputs keep their own border treatment. */
+  .admin-shell :is(a, button, [type="submit"], [tabindex]):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  /* Spinners feel faster when they spin faster. */
+  .admin-shell .animate-spin {
+    animation-duration: 0.7s;
+  }
+  /* One restrained first-paint cascade (opt in with .admin-stagger). */
+  .admin-stagger > * {
+    animation: admin-rise 0.28s var(--ease-out, ease-out) both;
+  }
+  .admin-stagger > *:nth-child(2) {
+    animation-delay: 0.05s;
+  }
+  .admin-stagger > *:nth-child(3) {
+    animation-delay: 0.1s;
+  }
+  .admin-stagger > *:nth-child(4) {
+    animation-delay: 0.15s;
+  }
+  .admin-stagger > *:nth-child(n + 5) {
+    animation-delay: 0.18s;
+  }
+}
+
+@keyframes admin-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-shell :is(button, [type="submit"], a[data-press]):active {
+    transform: none;
+  }
+  .admin-stagger > * {
+    animation: none;
+  }
 }
 
 @layer utilities {
