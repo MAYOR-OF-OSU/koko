@@ -254,7 +254,7 @@ export default async function AdminOverview() {
             {topCustomers.length === 0 ? (
               <p className="py-6 text-center text-sm text-muted-foreground">No customers yet.</p>
             ) : (
-              <Table>
+              <Table bare>
                 <THead>
                   <TR>
                     <TH>Name</TH>

@@ -51,7 +51,7 @@ export function OverviewRail({
       </Panel>
 
       <Panel>
-        <CardHeading title="Team" />
+        <CardHeading title="Admins" />
         <ul className="space-y-3">
           {team.map((m) => (
             <li key={m.email} className="flex items-center gap-3">

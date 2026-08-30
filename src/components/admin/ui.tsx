@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Database, MoreVertical } from "lucide-react";
+import { Database } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sparkline } from "@/components/admin/mini-chart";
 
@@ -16,14 +16,14 @@ export function AdminPage({
 }) {
   return (
     <div>
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-border pb-5">
-        <div>
-          <h1 className="font-heading text-2xl">{title}</h1>
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border pb-4 sm:items-end sm:pb-5">
+        <div className="min-w-0">
+          <h1 className="font-heading text-xl sm:text-2xl">{title}</h1>
           {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
         </div>
-        {actions && <div className="flex items-center gap-2">{actions}</div>}
+        {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
       </div>
-      <div className="mt-6">{children}</div>
+      <div className="mt-5 sm:mt-6">{children}</div>
     </div>
   );
 }
@@ -38,9 +38,9 @@ export function Panel({ className, children }: { className?: string; children: R
 
 export function CardHeading({ title, action }: { title: string; action?: ReactNode }) {
   return (
-    <div className="mb-4 flex items-center justify-between">
+    <div className="mb-3 flex items-center justify-between gap-3 sm:mb-4">
       <h2 className="font-heading text-lg">{title}</h2>
-      {action ?? <MoreVertical className="size-4 text-muted-foreground" />}
+      {action}
     </div>
   );
 }
@@ -83,7 +83,7 @@ export function StatCard({
 
 export function EmptyState({ title, hint }: { title: string; hint?: string }) {
   return (
-    <div className="rounded-lg border border-dashed border-border bg-card/50 p-12 text-center">
+    <div className="rounded-lg border border-dashed border-border bg-card/50 p-8 text-center sm:p-12">
       <p className="font-medium">{title}</p>
       {hint && <p className="mt-1 text-sm text-muted-foreground">{hint}</p>}
     </div>
@@ -130,10 +130,19 @@ export function StatusBadge({ status }: { status: string }) {
 }
 
 /* ---- table primitives ---- */
-export function Table({ children }: { children: ReactNode }) {
+/** `bare` drops the wrapper's own border/bg — use it when the table already sits
+ *  inside a <Panel> so you don't get a box-in-a-box. */
+export function Table({ children, bare }: { children: ReactNode; bare?: boolean }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-border bg-card">
-      <table className="w-full text-sm">{children}</table>
+    <div
+      className={cn(
+        "overflow-x-auto",
+        bare
+          ? "-mx-5 border-t border-border sm:-mx-6"
+          : "rounded-lg border border-border bg-card",
+      )}
+    >
+      <table className="w-full min-w-[34rem] text-sm">{children}</table>
     </div>
   );
 }

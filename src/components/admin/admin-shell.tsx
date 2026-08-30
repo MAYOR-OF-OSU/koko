@@ -141,7 +141,9 @@ export function AdminShell({
   };
 
   return (
-    <div className="flex min-h-svh bg-secondary/30">
+    // Fill the viewport on desktop (sidebar + content well); on mobile just wrap the
+    // content so short pages don't leave a tall empty band below the last card.
+    <div className="flex bg-secondary/30 lg:min-h-svh">
       {/* desktop sidebar */}
       <aside
         className={cn(

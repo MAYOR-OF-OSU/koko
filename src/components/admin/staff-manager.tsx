@@ -162,64 +162,74 @@ export function StaffManager({ users, selfId }: { users: StaffUser[]; selfId: st
 
       <Panel>
         <CardHeading title={`Team (${staff.length})`} />
-        <Table>
-          <THead>
-            <TR>
-              <TH>Name</TH>
-              <TH>Email</TH>
-              <TH>Joined</TH>
-              <TH>Role</TH>
-              <TH>Actions</TH>
-            </TR>
-          </THead>
-          <tbody>
-            {staff.map((u) => (
-              <TR key={u.id}>
-                <TD className="font-medium">
-                  {u.name}
-                  {u.id === selfId && <span className="ml-1.5 text-xs text-muted-foreground">(you)</span>}
-                </TD>
-                <TD className="text-muted-foreground">{u.email}</TD>
-                <TD className="text-muted-foreground">{formatDate(u.createdAt)}</TD>
-                <TD>
-                  <RoleSelect user={u} isSelf={u.id === selfId} />
-                </TD>
-                <TD>
-                  <StaffRowActions user={u} isSelf={u.id === selfId} />
-                </TD>
+        {staff.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No team members yet.</p>
+        ) : (
+          <Table bare>
+            <THead>
+              <TR>
+                <TH>Name</TH>
+                <TH>Email</TH>
+                <TH>Joined</TH>
+                <TH>Role</TH>
+                <TH>Actions</TH>
               </TR>
-            ))}
-          </tbody>
-        </Table>
+            </THead>
+            <tbody>
+              {staff.map((u) => (
+                <TR key={u.id}>
+                  <TD className="font-medium">
+                    {u.name}
+                    {u.id === selfId && (
+                      <span className="ml-1.5 text-xs text-muted-foreground">(you)</span>
+                    )}
+                  </TD>
+                  <TD className="text-muted-foreground">{u.email}</TD>
+                  <TD className="text-muted-foreground">{formatDate(u.createdAt)}</TD>
+                  <TD>
+                    <RoleSelect user={u} isSelf={u.id === selfId} />
+                  </TD>
+                  <TD>
+                    <StaffRowActions user={u} isSelf={u.id === selfId} />
+                  </TD>
+                </TR>
+              ))}
+            </tbody>
+          </Table>
+        )}
       </Panel>
 
       <Panel>
         <CardHeading title={`Customers (${customers.length})`} />
-        <p className="mb-3 text-sm text-muted-foreground">
+        <p className="mb-4 text-sm text-muted-foreground">
           Promote a customer to a staff role if they join the team.
         </p>
-        <Table>
-          <THead>
-            <TR>
-              <TH>Name</TH>
-              <TH>Email</TH>
-              <TH>Joined</TH>
-              <TH>Role</TH>
-            </TR>
-          </THead>
-          <tbody>
-            {customers.slice(0, 100).map((u) => (
-              <TR key={u.id}>
-                <TD className="font-medium">{u.name}</TD>
-                <TD className="text-muted-foreground">{u.email}</TD>
-                <TD className="text-muted-foreground">{formatDate(u.createdAt)}</TD>
-                <TD>
-                  <RoleSelect user={u} isSelf={u.id === selfId} />
-                </TD>
+        {customers.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No customers yet.</p>
+        ) : (
+          <Table bare>
+            <THead>
+              <TR>
+                <TH>Name</TH>
+                <TH>Email</TH>
+                <TH>Joined</TH>
+                <TH>Role</TH>
               </TR>
-            ))}
-          </tbody>
-        </Table>
+            </THead>
+            <tbody>
+              {customers.slice(0, 100).map((u) => (
+                <TR key={u.id}>
+                  <TD className="font-medium">{u.name}</TD>
+                  <TD className="text-muted-foreground">{u.email}</TD>
+                  <TD className="text-muted-foreground">{formatDate(u.createdAt)}</TD>
+                  <TD>
+                    <RoleSelect user={u} isSelf={u.id === selfId} />
+                  </TD>
+                </TR>
+              ))}
+            </tbody>
+          </Table>
+        )}
       </Panel>
     </div>
   );
