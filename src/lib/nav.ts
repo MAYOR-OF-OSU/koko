@@ -34,8 +34,11 @@ export const footerNav = {
   ],
 };
 
+// Fallback contact details for client components that can't call getStoreSettings()
+// (the server-rendered footer/contact page use the live CMS values instead).
 export const contact = {
   address: "Nationwide delivery",
+  email: "hello@timisjewels.com",
   phones: ["09013804907", "07030810301"],
   whatsapp: "2349013804907",
   instagram: "https://instagram.com/timisjewels",

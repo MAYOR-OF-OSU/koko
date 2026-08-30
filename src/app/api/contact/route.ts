@@ -5,10 +5,13 @@ import { sendMail } from "@/lib/mail";
 import { contact } from "@/lib/nav";
 
 const schema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  message: z.string().min(10),
+  name: z.string().trim().min(2).max(120),
+  email: z.string().trim().email(),
+  message: z.string().trim().min(10).max(4000),
 });
+
+const esc = (s: string) =>
+  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -16,18 +19,22 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: "Please fill in every field." }, { status: 400 });
   }
+  const { name, email, message } = parsed.data;
 
   try {
-    await prisma.contactMessage.create({ data: parsed.data });
+    await prisma.contactMessage.create({ data: { name, email, message } });
   } catch {
-    // DB optional locally.
+    // DB optional locally — still send the mail below.
   }
 
+  // Never let a mail failure 500 the request; the message is already saved.
   await sendMail({
-    to: contact.phones.length ? "hello@timisjewels.com" : parsed.data.email,
-    subject: `New enquiry from ${parsed.data.name}`,
-    html: `<p>${parsed.data.message}</p><p>— ${parsed.data.name} (${parsed.data.email})</p>`,
-  });
+    to: contact.email || "hello@timisjewels.com",
+    replyTo: email,
+    subject: `New enquiry from ${name}`,
+    html: `<p>${esc(message).replace(/\n/g, "<br>")}</p><p>— ${esc(name)} (${esc(email)})</p>`,
+    text: `${message}\n\n— ${name} (${email})`,
+  }).catch(() => {});
 
   return NextResponse.json({ ok: true });
 }

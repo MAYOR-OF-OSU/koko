@@ -7,7 +7,8 @@ export async function MarqueeBand() {
   return (
     <div className="overflow-hidden border-y border-border bg-background py-4">
       <div className="flex w-max animate-marquee items-center gap-12 whitespace-nowrap text-[0.7rem] uppercase tracking-[0.24em] text-muted-foreground">
-        {[...list, ...list, ...list].map((t, i) => (
+        {/* x4 so the -50% keyframe lands exactly on a copy boundary (seamless loop). */}
+        {[...list, ...list, ...list, ...list].map((t, i) => (
           <span key={i} className="flex items-center gap-12">
             {t}
             <span className="text-accent-gold">✦</span>

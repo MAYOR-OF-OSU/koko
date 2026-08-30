@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import type { NavItem } from "@/lib/nav";
@@ -174,10 +175,16 @@ function MenuRow({
                   {item.label}
                 </span>
                 {item.image && (
-                  <div
-                    className="h-[7svh] w-40 shrink-0 rounded-full bg-cover bg-center sm:w-48"
-                    style={{ backgroundImage: `url(${item.image})` }}
-                  />
+                  <div className="relative h-[7svh] w-40 shrink-0 overflow-hidden rounded-full sm:w-48">
+                    <Image
+                      src={item.image}
+                      alt=""
+                      fill
+                      sizes="12rem"
+                      quality={45}
+                      className="object-cover"
+                    />
+                  </div>
                 )}
               </div>
             ))}

@@ -8,7 +8,18 @@ import { Lookbook } from "@/components/home/lookbook";
 import { PromoBanner } from "@/components/home/promo-banner";
 import { Testimonials } from "@/components/home/testimonials";
 import { NewsletterSection } from "@/components/home/newsletter";
-import { getSetting } from "@/lib/site-content";
+import { getSetting, getStoreSettings } from "@/lib/site-content";
+import type { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const s = await getStoreSettings();
+  return {
+    title: { absolute: `${s.name} — ${s.tagline}` },
+    description:
+      "Handpicked fashion jewelry — neck chains, earrings, rings, bracelets, anklets and more, finished by hand and delivered nationwide in days.",
+    alternates: { canonical: "/" },
+  };
+}
 
 export default async function HomePage() {
   const stats = await getSetting("home.stats");

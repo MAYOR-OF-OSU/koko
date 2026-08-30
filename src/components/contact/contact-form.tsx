@@ -21,11 +21,15 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error();
+      const json = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) {
+        toast.error(json.error ?? "Could not send. Please try WhatsApp instead.");
+        return;
+      }
       toast.success("Message sent — we'll reply within a day.");
       form.reset();
     } catch {
-      toast.error("Could not send. Please try WhatsApp instead.");
+      toast.error("Network error — please try again or reach us on WhatsApp.");
     } finally {
       setPending(false);
     }

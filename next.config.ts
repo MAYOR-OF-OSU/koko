@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   // Next.js blocking its own dev chunk/HMR requests. Add your machine's LAN IP.
   allowedDevOrigins: ["localhost", "127.0.0.1", "192.168.0.185", "192.168.0.193"],
   images: {
+    // Serve the smallest of AVIF/WebP the browser accepts.
+    formats: ["image/avif", "image/webp"],
+    // Trim the default breakpoint ladder to sizes this layout actually renders.
+    deviceSizes: [360, 480, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // Remote sources allowed today (placeholders) + storage targets.
     remotePatterns: [
       { protocol: "https", hostname: "picsum.photos" },

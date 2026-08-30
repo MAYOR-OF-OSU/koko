@@ -8,18 +8,15 @@ import {
   Heart,
   User,
   MapPin,
-  Gift,
-  Sparkles,
   LogOut,
   Shield,
 } from "lucide-react";
-import { toast } from "sonner";
 import { signOut } from "@/lib/auth-client";
 import { logSignOut } from "@/server/actions/staff";
 import { isStaff } from "@/lib/roles";
 import { cn } from "@/lib/utils";
 
-type Item = { href?: string; label: string; icon: React.ComponentType<{ className?: string }>; soon?: boolean };
+type Item = { href: string; label: string; icon: React.ComponentType<{ className?: string }> };
 type Group = { title?: string; items: Item[] };
 
 const GROUPS: Group[] = [
@@ -38,13 +35,6 @@ const GROUPS: Group[] = [
       { href: "/account/addresses", label: "Manage Addresses", icon: MapPin },
     ],
   },
-  {
-    title: "Credits",
-    items: [
-      { label: "Rewards", icon: Sparkles, soon: true },
-      { label: "Refer & Earn", icon: Gift, soon: true },
-    ],
-  },
 ];
 
 export function AccountNav({
@@ -56,26 +46,13 @@ export function AccountNav({
   const router = useRouter();
 
   const link = (i: Item) => {
-    const active = i.href && pathname === i.href;
+    const active = pathname === i.href;
     const base =
       "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors";
-    if (i.soon) {
-      return (
-        <button
-          key={i.label}
-          onClick={() => toast.info("Coming soon")}
-          className={cn(base, "w-full text-left text-muted-foreground/70 hover:bg-secondary/60")}
-        >
-          <i.icon className="size-4 shrink-0" />
-          {i.label}
-          <span className="ml-auto text-[0.6rem] uppercase tracking-wide text-muted-foreground/60">soon</span>
-        </button>
-      );
-    }
     return (
       <Link
         key={i.href}
-        href={i.href!}
+        href={i.href}
         className={cn(
           base,
           "relative",

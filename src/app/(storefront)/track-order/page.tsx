@@ -50,7 +50,7 @@ export default function TrackOrderPage() {
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" placeholder="you@example.com" required />
+            <Input id="email" name="email" type="email" placeholder="you@email.com" required />
           </div>
           <Button
             type="submit"

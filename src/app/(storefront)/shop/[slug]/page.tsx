@@ -18,10 +18,13 @@ export async function generateMetadata({ params }: PageProps<"/shop/[slug]">): P
   const { slug } = await params;
   const p = getProduct(slug);
   if (!p) return { title: "Not found" };
+  const abs = `${env.NEXT_PUBLIC_SITE_URL}${p.image}`;
   return {
     title: p.name,
     description: p.description,
-    openGraph: { images: [p.image], title: p.name, description: p.description },
+    alternates: { canonical: `/shop/${slug}` },
+    openGraph: { type: "website", images: [abs], title: p.name, description: p.description },
+    twitter: { card: "summary_large_image", images: [abs], title: p.name, description: p.description },
   };
 }
 
@@ -44,25 +47,50 @@ export default async function ProductPage({ params }: PageProps<"/shop/[slug]">)
     ? Math.round((1 - product.priceKobo / product.compareAtKobo) * 100)
     : 0;
 
+  const base = env.NEXT_PUBLIC_SITE_URL;
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    image: product.images,
-    description: product.description,
-    brand: { "@type": "Brand", name: "Timi's Jewels" },
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "NGN",
-      price: (product.priceKobo / 100).toFixed(2),
-      availability: "https://schema.org/InStock",
-      url: `${env.NEXT_PUBLIC_SITE_URL}/shop/${product.slug}`,
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: product.rating.toFixed(1),
-      reviewCount: reviewCount(product.slug),
-    },
+    "@graph": [
+      {
+        "@type": "Product",
+        name: product.name,
+        image: product.images.map((i) => `${base}${i}`),
+        description: product.description,
+        brand: { "@type": "Brand", name: "Timi's Jewels" },
+        category: category?.name,
+        itemCondition: "https://schema.org/NewCondition",
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "NGN",
+          price: (product.priceKobo / 100).toFixed(2),
+          availability: "https://schema.org/InStock",
+          itemCondition: "https://schema.org/NewCondition",
+          url: `${base}/shop/${product.slug}`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Shop", item: `${base}/shop` },
+          ...(category
+            ? [
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: category.name,
+                  item: `${base}/shop?category=${category.slug}`,
+                },
+              ]
+            : []),
+          {
+            "@type": "ListItem",
+            position: category ? 3 : 2,
+            name: product.name,
+            item: `${base}/shop/${product.slug}`,
+          },
+        ],
+      },
+    ],
   };
 
   return (

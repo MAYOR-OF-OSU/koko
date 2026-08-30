@@ -1,9 +1,15 @@
 import Link from "next/link";
-import { MapPin, Phone } from "lucide-react";
+import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { NewsletterForm } from "@/components/home/newsletter";
 import { footerNav } from "@/lib/nav";
 import { getStoreSettings } from "@/lib/site-content";
+
+/** Local Nigerian number (0xxxxxxxxxx) → E.164 for a robust `tel:` href. */
+const telHref = (p: string) => `tel:${p.replace(/[^\d+]/g, "").replace(/^0/, "+234")}`;
+/** Instagram URL → "@handle" for the visible label. */
+const igHandle = (url: string) =>
+  "@" + url.replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/\/+$/, "");
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -44,7 +50,9 @@ export async function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-8">
         <div className="grid gap-x-6 gap-y-7 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="max-w-sm">
-            <Logo variant="lockup" className="h-8 text-cocoa-foreground" />
+            <Link href="/" aria-label="Timi's Jewels home" className="inline-block">
+              <Logo variant="lockup" className="h-8 text-cocoa-foreground" />
+            </Link>
             <p className="mt-3 text-[0.8rem] leading-relaxed text-cocoa-foreground/70">
               Handpicked fashion jewelry, finished by hand and shipped nationwide.
             </p>
@@ -61,7 +69,7 @@ export async function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-7 flex flex-col gap-4 border-t border-cocoa-foreground/15 pt-5 text-xs text-cocoa-foreground/60 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+        <div className="mt-7 flex flex-col gap-3 border-t border-cocoa-foreground/15 pt-5 text-xs text-cocoa-foreground/60 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5">
           <span className="flex items-center gap-1.5">
             <MapPin className="size-3.5 shrink-0 text-accent-gold" />
             {contact.address}
@@ -70,21 +78,41 @@ export async function SiteFooter() {
             <Phone className="size-3.5 shrink-0 text-accent-gold" />
             {contact.phones.map((p, i) => (
               <span key={p}>
-                <a href={`tel:${p}`} className="hover:text-cocoa-foreground">
+                <a href={telHref(p)} className="hover:text-cocoa-foreground">
                   {p}
                 </a>
                 {i < contact.phones.length - 1 && <span className="mx-1">·</span>}
               </span>
             ))}
           </span>
+          {contact.email && (
+            <a
+              href={`mailto:${contact.email}`}
+              className="flex items-center gap-1.5 hover:text-cocoa-foreground"
+            >
+              <Mail className="size-3.5 shrink-0 text-accent-gold" />
+              {contact.email}
+            </a>
+          )}
+          {contact.whatsapp && (
+            <a
+              href={`https://wa.me/${contact.whatsapp}`}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1.5 hover:text-cocoa-foreground"
+            >
+              <MessageCircle className="size-3.5 shrink-0 text-accent-gold" />
+              WhatsApp
+            </a>
+          )}
           <a
             href={contact.instagram}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1.5 hover:text-cocoa-foreground"
+            className="flex items-center gap-1.5 hover:text-cocoa-foreground sm:ml-auto"
           >
             <InstagramIcon className="size-3.5 shrink-0 text-accent-gold" />
-            @timisjewels
+            {igHandle(contact.instagram)}
           </a>
         </div>
 

@@ -161,6 +161,7 @@ export function LoginForm({ googleEnabled = false }: { googleEnabled?: boolean }
         toast.error(error.message ?? "Could not sign in");
         return;
       }
+      toast.success("Signed in");
       const role = (data?.user as { role?: string } | undefined)?.role;
       router.push(role === "admin" ? "/admin" : next);
       router.refresh();

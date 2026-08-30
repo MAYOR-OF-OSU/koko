@@ -91,7 +91,7 @@ export type SiteSettingMap = {
 
 export const siteContentDefaults: SiteSettingMap = {
   "home.hero": {
-    eyebrow: "Welcoming the season with diamond & gold",
+    eyebrow: "Welcoming the season with diamond & sparkle",
     headline: "Discover your sparkle",
     body: "Hand-finished chains, hoops, cuffs and rings — made to layer, made to last. Quietly luxurious, delivered nationwide in days.",
     primaryCtaLabel: "Shop Now",
@@ -197,7 +197,7 @@ export const siteContentDefaults: SiteSettingMap = {
         id: "privacy",
         title: "Payments & privacy",
         qas: [
-          { q: "How do I pay?", a: "Card, bank transfer and USSD via Paystack at checkout. Online payments are being switched on shortly." },
+          { q: "How do I pay?", a: "Card, bank transfer and USSD via Paystack at checkout — you're redirected to Paystack's secure page to pay." },
           { q: "Is my information safe?", a: "We only store what's needed to fulfil your order. See our privacy policy for details." },
         ],
       },

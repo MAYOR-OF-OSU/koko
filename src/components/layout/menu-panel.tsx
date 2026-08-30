@@ -64,10 +64,16 @@ export function MenuPanel({
           </div>
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.8rem]">
             <a
-              href={`tel:${contact.phones[0]}`}
+              href={`tel:${contact.phones[0].replace(/^0/, "+234")}`}
               className="transition-colors hover:text-cocoa-foreground"
             >
               {contact.phones[0]}
+            </a>
+            <a
+              href={`mailto:${contact.email}`}
+              className="transition-colors hover:text-cocoa-foreground"
+            >
+              Email
             </a>
             <a
               href={`https://wa.me/${contact.whatsapp}`}
@@ -83,7 +89,7 @@ export function MenuPanel({
               rel="noreferrer"
               className="transition-colors hover:text-cocoa-foreground"
             >
-              @timisjewels
+              {"@" + contact.instagram.replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/\/+$/, "")}
             </a>
           </div>
         </div>

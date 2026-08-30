@@ -18,7 +18,13 @@ function getTransport() {
   return transport;
 }
 
-export async function sendMail(opts: { to: string; subject: string; html: string; text?: string }) {
+export async function sendMail(opts: {
+  to: string;
+  subject: string;
+  html: string;
+  text?: string;
+  replyTo?: string;
+}) {
   const t = getTransport();
   if (!t) {
     console.info("[mail:dev]", { from: env.SMTP_FROM, ...opts });

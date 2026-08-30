@@ -25,18 +25,18 @@ export async function Hero() {
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/80 sm:text-[0.95rem]">
               {c.body}
             </p>
-            <div className="mt-7 flex items-center gap-2.5 sm:mt-9 sm:gap-3">
+            <div className="mt-7 flex flex-wrap items-center gap-2.5 sm:mt-9 sm:gap-3">
               <InteractiveHoverLink
                 href={c.primaryCtaHref}
                 variant="heroDark"
-                className="flex-1 justify-center whitespace-nowrap px-3 sm:flex-initial sm:px-6"
+                className="min-w-[9rem] flex-1 justify-center px-3 text-center sm:flex-initial sm:px-6"
               >
                 {c.primaryCtaLabel}
               </InteractiveHoverLink>
               <InteractiveHoverLink
                 href={c.secondaryCtaHref}
                 variant="heroDark"
-                className="flex-1 justify-center whitespace-nowrap px-3 sm:flex-initial sm:px-6"
+                className="min-w-[9rem] flex-1 justify-center px-3 text-center sm:flex-initial sm:px-6"
               >
                 {c.secondaryCtaLabel}
               </InteractiveHoverLink>

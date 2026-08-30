@@ -9,7 +9,11 @@ import { markOrderPaid } from "@/lib/checkout";
 import { prisma } from "@/lib/prisma";
 import { formatNaira } from "@/lib/format";
 
-export const metadata: Metadata = { title: "Payment", robots: { index: false } };
+export const metadata: Metadata = {
+  title: "Payment",
+  description: "Your Timi's Jewels payment status.",
+  robots: { index: false },
+};
 export const dynamic = "force-dynamic";
 
 type State =

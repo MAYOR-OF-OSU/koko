@@ -4,7 +4,11 @@ import { CheckoutForm } from "@/components/checkout/checkout-form";
 import { getStoreSettings } from "@/lib/site-content";
 import { features } from "@/lib/env";
 
-export const metadata: Metadata = { title: "Checkout" };
+export const metadata: Metadata = {
+  title: "Checkout",
+  description: "Enter your delivery details and pay securely via Paystack.",
+  robots: { index: false },
+};
 export const dynamic = "force-dynamic";
 
 export default async function CheckoutPage() {

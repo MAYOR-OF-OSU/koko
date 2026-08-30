@@ -129,8 +129,18 @@ export function CheckoutForm({
         {!paystackReady && (
           <div className="flex items-start gap-2 rounded-xl border border-border bg-muted/40 p-3 text-sm text-muted-foreground">
             <Info className="mt-0.5 size-4 shrink-0" />
-            Online payments are being switched on. For now, place your order and we&rsquo;ll send a
-            payment link on WhatsApp.
+            <span>
+              Online card payments are being switched on. To order now, message us on{" "}
+              <a
+                href="https://wa.me/2349013804907"
+                target="_blank"
+                rel="noreferrer"
+                className="font-medium text-foreground underline"
+              >
+                WhatsApp
+              </a>{" "}
+              with your bag and delivery details.
+            </span>
           </div>
         )}
 

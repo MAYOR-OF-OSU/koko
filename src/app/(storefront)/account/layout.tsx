@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { AccountNav } from "@/components/account/account-nav";
+
+export const metadata: Metadata = {
+  title: "Your account",
+  description: "Manage your Timi's Jewels orders, wishlist, addresses and profile.",
+  robots: { index: false },
+};
 
 export default async function AccountLayout({ children }: LayoutProps<"/account">) {
   const session = await auth.api.getSession({ headers: await headers() });

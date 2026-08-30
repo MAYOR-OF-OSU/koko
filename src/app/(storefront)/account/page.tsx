@@ -1,13 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { headers } from "next/headers";
-import { ShoppingBag, Heart, Package, Sparkles, Gift, ArrowRight } from "lucide-react";
+import { ShoppingBag, Heart, Package, ArrowRight } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatNaira, timeAgo } from "@/lib/format";
 import { CategoryDonut } from "@/components/admin/mini-chart";
 import { CartStat } from "@/components/account/cart-stat";
-import { ReferButton } from "@/components/account/refer-button";
 import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -103,7 +102,7 @@ export default async function AccountOverview() {
   return (
     <div className="space-y-6">
       {/* stat cards */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-3">
         <StatCard
           label="Items in your cart"
           value={<CartStat />}
@@ -127,14 +126,6 @@ export default async function AccountOverview() {
           cta="View all orders"
           icon={Package}
           tint="bg-[color-mix(in_oklch,var(--accent-gold)_16%,var(--card))]"
-        />
-        <StatCard
-          label="Reward points"
-          value="₦0"
-          href="/account"
-          cta="Coming soon"
-          icon={Sparkles}
-          tint="bg-[color-mix(in_oklch,var(--cocoa)_7%,var(--card))]"
         />
       </div>
 
@@ -187,32 +178,6 @@ export default async function AccountOverview() {
               ))}
             </ul>
           )}
-        </div>
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
-        {/* bonus */}
-        <div className="flex items-center gap-4 rounded-2xl border border-border bg-[color-mix(in_oklch,var(--accent-gold)_12%,var(--card))] p-5">
-          <span className="grid size-12 shrink-0 place-items-center rounded-full bg-card">
-            <Gift className="size-5 text-accent-gold" />
-          </span>
-          <div className="flex-1">
-            <p className="font-heading text-xl">₦0 <span className="text-sm font-normal text-muted-foreground">bonuses earned</span></p>
-            <Link href="/shop" className="mt-1 inline-flex items-center gap-1 text-[0.72rem] font-medium uppercase tracking-[0.12em] text-rose-deep hover:underline">
-              Shop now <ArrowRight className="size-3" />
-            </Link>
-          </div>
-        </div>
-
-        {/* refer & earn */}
-        <div className="flex flex-col justify-between gap-4 rounded-2xl border border-border bg-cocoa p-6 text-cocoa-foreground sm:flex-row sm:items-center">
-          <div>
-            <p className="font-heading text-lg">Refer &amp; earn</p>
-            <p className="mt-1 max-w-xs text-sm text-cocoa-foreground/75">
-              Give a friend ₦2,000 off their first order — get ₦2,000 when they buy.
-            </p>
-          </div>
-          <ReferButton />
         </div>
       </div>
     </div>
