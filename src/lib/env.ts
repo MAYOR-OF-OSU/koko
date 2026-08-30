@@ -2,6 +2,15 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 /**
+ * On Vercel, fall back to the deployment's own origin rather than localhost, so a
+ * missing NEXT_PUBLIC_SITE_URL / BETTER_AUTH_URL doesn't point auth, metadata and
+ * the Paystack callback at http://localhost:3000 in production.
+ * VERCEL_PROJECT_PRODUCTION_URL = the stable prod domain; VERCEL_URL = this deploy.
+ */
+const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+const siteUrlFallback = vercelHost ? `https://${vercelHost}` : "http://localhost:3000";
+
+/**
  * Central, validated environment config.
  *
  * Phase 1 runs on localhost with no live secrets, so every integration var is
@@ -17,7 +26,7 @@ export const env = createEnv({
       .default("postgresql://postgres:postgres@localhost:5432/timis_jewels?schema=public"),
 
     BETTER_AUTH_SECRET: z.string().min(1).default("dev-only-insecure-secret-change-me"),
-    BETTER_AUTH_URL: z.string().url().default("http://localhost:3000"),
+    BETTER_AUTH_URL: z.string().url().default(siteUrlFallback),
 
     ADMIN_EMAIL: z.string().email().default("admin@timisjewels.local"),
     ADMIN_PASSWORD: z.string().min(8).default("changeme123"),
@@ -47,7 +56,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string().optional(),
   },
   client: {
-    NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
+    NEXT_PUBLIC_SITE_URL: z.string().url().default(siteUrlFallback),
     NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY: z.string().optional(),
   },
   runtimeEnv: {

@@ -10,11 +10,26 @@ const googleProvider =
     ? { google: { clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET } }
     : undefined;
 
+// Accept requests from the configured site URL plus the Vercel-provided origins
+// (this deployment and the production alias), so auth still works when
+// BETTER_AUTH_URL / NEXT_PUBLIC_SITE_URL haven't been set in the dashboard.
+const trustedOrigins = [
+  ...new Set(
+    [
+      env.NEXT_PUBLIC_SITE_URL,
+      env.BETTER_AUTH_URL,
+      process.env.VERCEL_PROJECT_PRODUCTION_URL &&
+        `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
+      process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
+    ].filter(Boolean) as string[],
+  ),
+];
+
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
-  trustedOrigins: [...new Set([env.NEXT_PUBLIC_SITE_URL, env.BETTER_AUTH_URL])],
+  trustedOrigins,
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
