@@ -48,7 +48,9 @@ export async function updateOrderStatus(id: string, status: OrderStatus) {
 
 const overrideSchema = z.object({
   status: z.enum(STATUSES),
-  reason: z.string().trim().min(3).max(400),
+  // Optional — the order-detail panel requires it in the UI; the Payments-list
+  // quick control leaves it blank.
+  reason: z.string().trim().max(400).optional(),
 });
 
 /**
@@ -72,7 +74,7 @@ export async function overrideOrderStatus(
     if (!order) return { ok: false, error: "Order not found" };
     if (order.status === d.status) return { ok: false, error: `Order is already ${d.status}.` };
 
-    const note = `Admin override (${order.status} → ${d.status}): ${d.reason}`;
+    const note = `Admin override (${order.status} → ${d.status})${d.reason ? `: ${d.reason}` : ""}`;
     const data: {
       status: OrderStatus;
       paymentNote: string;
@@ -94,9 +96,10 @@ export async function overrideOrderStatus(
     await logAudit({
       action: "order.override",
       target: order.reference,
-      meta: { from: order.status, to: d.status, reason: d.reason, by: session.user.email },
+      meta: { from: order.status, to: d.status, reason: d.reason ?? null, by: session.user.email },
     });
 
+    revalidatePath("/admin/payments");
     revalidatePath("/admin/orders");
     revalidatePath(`/admin/orders/${id}`);
     revalidatePath("/account/orders");

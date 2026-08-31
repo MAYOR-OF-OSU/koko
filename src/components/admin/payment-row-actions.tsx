@@ -1,10 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { markPaymentSuccessful } from "@/server/actions/order";
-import { useAction } from "@/components/admin/form";
+import { markPaymentSuccessful, overrideOrderStatus, type OrderStatus } from "@/server/actions/order";
+import { Select, useAction } from "@/components/admin/form";
 
+const OPTIONS: OrderStatus[] = ["pending", "paid", "fulfilled", "cancelled"];
+
+/** Admin-only inline status control for a transaction on the Payments list.
+ *  pending → paid routes through markPaymentSuccessful (emails the receipt);
+ *  every other transition is a straight admin override. Non-admins see nothing. */
 export function PaymentRowActions({
   id,
   status,
@@ -15,37 +19,47 @@ export function PaymentRowActions({
   isAdmin: boolean;
 }) {
   const router = useRouter();
-  const { pending, run } = useAction(() => markPaymentSuccessful(id), {
-    success: "Payment marked successful",
-    onDone: () => router.refresh(),
-  });
-
-  if (status !== "pending") {
-    return (
-      <Link
-        href={`/admin/orders/${id}`}
-        className="text-xs text-muted-foreground hover:text-foreground"
-      >
-        View
-      </Link>
-    );
-  }
+  const { pending, run } = useAction(
+    (next: OrderStatus) =>
+      status === "pending" && next === "paid"
+        ? markPaymentSuccessful(id)
+        : overrideOrderStatus(id, { status: next }),
+    { success: "Transaction status updated", onDone: () => router.refresh() },
+  );
 
   if (!isAdmin) {
-    return <span className="text-xs text-muted-foreground">Awaiting payment</span>;
+    return <span className="text-xs text-muted-foreground">—</span>;
   }
 
   return (
-    <button
-      type="button"
+    <Select
+      className="ml-auto max-w-36 capitalize"
+      defaultValue={status}
       disabled={pending}
-      onClick={() => {
-        if (confirm("Mark this payment as successful? The customer gets a receipt."))
-          run();
+      aria-label="Change transaction status"
+      onChange={(e) => {
+        const next = e.target.value as OrderStatus;
+        if (next === status) return;
+        const reversing =
+          (status === "paid" || status === "fulfilled") &&
+          (next === "pending" || next === "cancelled");
+        if (
+          reversing &&
+          !confirm(
+            `Change this transaction from "${status}" to "${next}"? This clears the payment record.`,
+          )
+        ) {
+          e.target.value = status; // undo the picker
+          return;
+        }
+        run(next);
       }}
-      className="rounded-full border border-emerald-300 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-800 transition hover:bg-emerald-100 disabled:opacity-50"
     >
-      {pending ? "Marking…" : "Mark successful"}
-    </button>
+      {OPTIONS.map((s) => (
+        <option key={s} value={s} className="capitalize">
+          {s}
+        </option>
+      ))}
+    </Select>
   );
 }

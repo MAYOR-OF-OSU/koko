@@ -38,7 +38,7 @@ export const adminNav: AdminGroup[] = [
     links: [
       { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true, permission: "overview" },
       { href: "/admin/orders", label: "Orders", icon: ShoppingCart, permission: "orders:read" },
-      { href: "/admin/payments", label: "Payments", icon: CreditCard, permission: "orders:read" },
+      { href: "/admin/payments", label: "Payments", icon: CreditCard, permission: "payments:write" },
       { href: "/admin/customers", label: "Customers", icon: Users, permission: "customers:read" },
     ],
   },

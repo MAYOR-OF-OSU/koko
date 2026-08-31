@@ -20,6 +20,7 @@ export type Permission =
   | "media:write" // upload / manage the media library
   | "inbox:read"
   | "settings:write"
+  | "payments:write" // view Payments + change any transaction's status (admin only)
   | "alerts:raise"
   | "alerts:resolve"
   | "staff:write" // assign roles
@@ -38,6 +39,7 @@ const MATRIX: Record<Role, Permission[]> = {
     "media:write",
     "inbox:read",
     "settings:write",
+    "payments:write",
     "alerts:raise",
     "alerts:resolve",
     "staff:write",

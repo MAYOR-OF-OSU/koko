@@ -39,8 +39,9 @@ function method(paystackRef: string | null) {
 }
 
 export default async function AdminPaymentsPage({ searchParams }: PageProps<"/admin/payments">) {
-  const session = await guardPage("orders:read");
-  const isAdmin = session?.user.role === "admin";
+  // payments:write is admin-only — the whole section is gated to admins.
+  await guardPage("payments:write");
+  const isAdmin = true;
 
   const sp = await searchParams;
   const tab = typeof sp.status === "string" && sp.status in WHERE ? sp.status : "all";
@@ -120,7 +121,7 @@ export default async function AdminPaymentsPage({ searchParams }: PageProps<"/ad
               <TH className="text-right">Amount</TH>
               <TH>Method</TH>
               <TH>Status</TH>
-              <TH className="text-right">Action</TH>
+              <TH className="text-right">Set status</TH>
             </TR>
           </THead>
           <tbody>
