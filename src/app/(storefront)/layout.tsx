@@ -6,12 +6,18 @@ import { HomeBrandStrip } from "@/components/brand/home-brand-strip";
 
 export default function StorefrontLayout({ children }: LayoutProps<"/">) {
   return (
-    <>
+    // bg-cocoa is the base: any space the content doesn't fill (short pages, iOS
+    // dvh under-reporting) reads as an extension of the footer, never a light void.
+    <div className="flex min-h-dvh flex-1 flex-col bg-cocoa">
       <SiteHeader announcement={<AnnouncementBar />} />
-      <main className="flex-1">{children}</main>
-      <HomeBrandStrip />
-      <SiteFooter />
+      <main className="bg-background">{children}</main>
+      {/* mt-auto pins this group to the bottom; its own bg keeps the brand strip's
+          translucent tint reading correctly over light, not over cocoa. */}
+      <div className="mt-auto bg-background">
+        <HomeBrandStrip />
+        <SiteFooter />
+      </div>
       <CartDrawer />
-    </>
+    </div>
   );
 }
