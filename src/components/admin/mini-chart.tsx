@@ -30,7 +30,7 @@ export const CATEGORY_COLORS = [
 
 export function RevenueChart({ data }: { data: ChartPoint[] }) {
   return (
-    <div className="h-60 w-full">
+    <div className="h-60 w-full min-w-0">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
           <defs>
@@ -73,7 +73,7 @@ export function RevenueChart({ data }: { data: ChartPoint[] }) {
 export function Sparkline({ data, up = true }: { data: number[]; up?: boolean }) {
   const points = data.map((v, i) => ({ i, v }));
   return (
-    <div className="h-10 w-full">
+    <div className="h-10 w-full min-w-0">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={points} margin={{ top: 2, right: 0, bottom: 2, left: 0 }}>
           <Line
@@ -94,15 +94,17 @@ export function CategoryDonut({ data }: { data: { name: string; value: number }[
   const total = data.reduce((n, d) => n + d.value, 0);
   return (
     <div className="flex w-full min-w-0 flex-col items-center gap-6">
-      <div className="relative h-48 w-48 shrink-0">
+      <div className="relative mx-auto aspect-square w-44 max-w-full shrink-0 sm:w-48">
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
+          <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
             <Pie
               data={data.length ? data : [{ name: "No sales", value: 1 }]}
               dataKey="value"
               nameKey="name"
-              innerRadius={62}
-              outerRadius={92}
+              cx="50%"
+              cy="50%"
+              innerRadius="62%"
+              outerRadius="98%"
               paddingAngle={data.length > 1 ? 2 : 0}
               stroke="var(--card)"
               strokeWidth={2}
@@ -118,10 +120,12 @@ export function CategoryDonut({ data }: { data: { name: string; value: number }[
             />
           </PieChart>
         </ResponsiveContainer>
-        <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
+        <div className="pointer-events-none absolute inset-0 grid place-items-center px-3 text-center">
           <div>
-            <p className="font-heading text-xl leading-none">{formatNaira(total)}</p>
-            <p className="text-[0.6rem] uppercase tracking-widest text-muted-foreground">Total</p>
+            <p className="font-heading text-xl leading-tight tabular-nums">{formatNaira(total)}</p>
+            <p className="mt-0.5 text-[0.6rem] uppercase tracking-widest text-muted-foreground">
+              Total
+            </p>
           </div>
         </div>
       </div>

@@ -201,8 +201,8 @@ export default async function AdminOverview() {
     <AdminPage title="Overview" description="Store health at a glance.">
       <div className="grid gap-6 lg:grid-cols-[1fr_19rem]">
         {/* main column */}
-        <div className="space-y-6">
-          <div className="admin-stagger grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="min-w-0 space-y-6">
+          <div className="admin-stagger grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <StatCard
               label="Revenue"
               value={formatNaira(stats.revenue)}
@@ -232,11 +232,11 @@ export default async function AdminOverview() {
           </div>
 
           <div className="grid items-start gap-6 xl:grid-cols-2">
-            <Panel>
+            <Panel className="min-w-0">
               <CardHeading title="Sales by category" />
               <CategoryDonut data={salesByCategory} />
             </Panel>
-            <Panel>
+            <Panel className="min-w-0">
               <CardHeading title="Revenue — last 30 days" />
               <RevenueChart data={chart} />
             </Panel>
