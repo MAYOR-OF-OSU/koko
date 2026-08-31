@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { toast } from "sonner";
 
 export type CartLine = {
   productSlug: string;
@@ -15,6 +16,9 @@ export type CartLine = {
 type CartState = {
   lines: CartLine[];
   isOpen: boolean;
+  /** Session-only: the drawer auto-opens on the first add, then stays out of the
+   *  way so repeated adds don't interrupt browsing. Cleared on checkout. */
+  autoOpenedOnce: boolean;
   add: (line: Omit<CartLine, "qty">, qty?: number) => void;
   remove: (productSlug: string, variant?: string) => void;
   setQty: (productSlug: string, qty: number, variant?: string) => void;
@@ -29,18 +33,25 @@ export const useCart = create<CartState>()(
     (set) => ({
       lines: [],
       isOpen: false,
-      add: (line, qty = 1) =>
+      autoOpenedOnce: false,
+      add: (line, qty = 1) => {
+        let notify = false;
         set((state) => {
           const idx = state.lines.findIndex(
             (l) => key(l.productSlug, l.variant) === key(line.productSlug, line.variant),
           );
-          if (idx >= 0) {
-            const lines = [...state.lines];
-            lines[idx] = { ...lines[idx], qty: lines[idx].qty + qty };
-            return { lines, isOpen: true };
-          }
-          return { lines: [...state.lines, { ...line, qty }], isOpen: true };
-        }),
+          const lines =
+            idx >= 0
+              ? state.lines.map((l, i) => (i === idx ? { ...l, qty: l.qty + qty } : l))
+              : [...state.lines, { ...line, qty }];
+          // Open the drawer only on the first add of the session (or if it's
+          // already open); after that just refresh it quietly.
+          const open = state.isOpen || !state.autoOpenedOnce;
+          notify = !open;
+          return { lines, isOpen: open, autoOpenedOnce: true };
+        });
+        if (notify) toast.success("Added to your bag");
+      },
       remove: (slug, variant) =>
         set((state) => ({
           lines: state.lines.filter((l) => key(l.productSlug, l.variant) !== key(slug, variant)),
@@ -55,10 +66,19 @@ export const useCart = create<CartState>()(
             )
             .filter((l) => l.qty > 0),
         })),
-      clear: () => set({ lines: [] }),
+      clear: () => set({ lines: [], isOpen: false, autoOpenedOnce: false }),
       setOpen: (isOpen) => set({ isOpen }),
     }),
-    { name: "timis-jewels-cart" },
+    {
+      name: "timis-jewels-cart",
+      // Only the bag contents survive a reload — never the open/auto-open state
+      // (guard both the write and the read, incl. older stored blobs).
+      partialize: (s) => ({ lines: s.lines }),
+      merge: (persisted, current) => ({
+        ...current,
+        lines: (persisted as { lines?: CartLine[] } | undefined)?.lines ?? current.lines,
+      }),
+    },
   ),
 );
 

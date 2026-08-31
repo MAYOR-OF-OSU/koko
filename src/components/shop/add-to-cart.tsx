@@ -99,16 +99,15 @@ export function AddToCart({ product }: { product: MockProduct }) {
       <div className="flex items-stretch gap-3">
         <InteractiveHoverButton
           className="flex-1 justify-center"
-          onClick={() => {
+          onClick={() =>
             add({
               productSlug: product.slug,
               name: product.name,
               image: product.image,
               priceKobo: product.priceKobo,
               variant,
-            });
-            toast.success("Added to your bag");
-          }}
+            })
+          }
         >
           Add to Cart
         </InteractiveHoverButton>
