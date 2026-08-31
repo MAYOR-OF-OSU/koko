@@ -21,7 +21,7 @@ export function ShopSearch() {
   return (
     <form
       onSubmit={submit}
-      className="mx-auto -mt-8 flex max-w-3xl items-center gap-3 rounded-full border border-border bg-card p-2 pl-5 shadow-[0_18px_50px_-24px_rgba(42,20,55,0.35)]"
+      className="relative z-10 mx-auto mt-3 flex max-w-3xl items-center gap-3 rounded-full border border-border bg-card p-2 pl-5 shadow-[0_18px_50px_-24px_rgba(42,20,55,0.35)] sm:-mt-8"
     >
       <span className="hidden text-sm font-medium sm:block">Give all you need</span>
       <span className="hidden h-5 w-px bg-border sm:block" />
