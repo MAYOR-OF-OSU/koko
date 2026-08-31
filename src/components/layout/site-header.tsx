@@ -36,10 +36,12 @@ export function SiteHeader({ announcement }: { announcement?: React.ReactNode })
         {announcement}
         <div
           className={cn(
-            "border-b transition-colors duration-300",
+            "transition-[background-color,border-color,box-shadow] duration-300",
+            // a hairline divider only under inner pages' sticky header — never over the home hero
+            !isHome && "border-b border-border",
             overHero
-              ? "border-transparent bg-[linear-gradient(to_bottom,rgba(18,8,24,0.55),rgba(18,8,24,0.15)_70%,transparent)] text-white [text-shadow:0_1px_10px_rgba(0,0,0,0.35)]"
-              : "border-border bg-background/95 text-foreground backdrop-blur",
+              ? "bg-[linear-gradient(to_bottom,rgba(18,8,24,0.45),transparent_78%)] text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.4)]"
+              : "bg-background/95 text-foreground shadow-[0_1px_12px_-6px_rgba(42,20,55,0.3)] backdrop-blur",
           )}
         >
           <div
