@@ -129,6 +129,12 @@
        `clip` (not `hidden`) keeps `position: sticky` working. */
     overflow-x: clip;
   }
+  html {
+    /* Match the footer colour so the strip iOS Safari can expose below <body>
+       when the URL bar collapses (min-h-dvh under-reports) is invisible, not a
+       light band under the dark footer. */
+    background-color: var(--cocoa);
+  }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
