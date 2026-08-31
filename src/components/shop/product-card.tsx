@@ -57,15 +57,19 @@ export function ProductCard({
           priority={priority}
           className="object-cover transition-transform duration-[900ms] group-hover:scale-105"
         />
-        {cat && (
-          <span className="absolute right-3 top-3 rounded-full bg-background/90 px-2.5 py-1 text-[0.6rem] font-medium uppercase tracking-[0.12em] text-foreground/70 backdrop-blur">
-            {cat.name}
-          </span>
-        )}
-        {product.badge === "sale" && (
-          <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-[0.6rem] font-medium uppercase tracking-[0.12em] text-primary-foreground">
-            Sale
-          </span>
+        {(cat || product.badge === "sale") && (
+          <div className="pointer-events-none absolute inset-x-3 top-3 flex items-start gap-2">
+            {product.badge === "sale" && (
+              <span className="shrink-0 rounded-full bg-primary px-2.5 py-1 text-[0.6rem] font-medium uppercase tracking-[0.12em] text-primary-foreground">
+                Sale
+              </span>
+            )}
+            {cat && (
+              <span className="ml-auto min-w-0 truncate rounded-full bg-background/90 px-2.5 py-1 text-[0.6rem] font-medium uppercase tracking-[0.12em] text-foreground/70 backdrop-blur">
+                {cat.name}
+              </span>
+            )}
+          </div>
         )}
         <button
           type="button"
@@ -100,11 +104,11 @@ export function ProductCard({
           )}
         </div>
 
-        <div className="mt-3 flex gap-2">
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row">
           <button
             type="button"
             onClick={addToCart}
-            className="flex-1 rounded-full border border-foreground/20 px-3 py-2 text-[0.62rem] font-medium uppercase tracking-[0.1em] transition hover:border-foreground hover:bg-secondary"
+            className="flex-1 whitespace-nowrap rounded-full border border-foreground/20 px-3 py-2 text-[0.62rem] font-medium uppercase tracking-[0.1em] transition hover:border-foreground hover:bg-secondary"
           >
             Add to Cart
           </button>
@@ -114,7 +118,7 @@ export function ProductCard({
               addToCart();
               router.push("/cart");
             }}
-            className="flex-1 rounded-full bg-foreground px-3 py-2 text-[0.62rem] font-medium uppercase tracking-[0.1em] text-background transition hover:opacity-90"
+            className="flex-1 whitespace-nowrap rounded-full bg-foreground px-3 py-2 text-[0.62rem] font-medium uppercase tracking-[0.1em] text-background transition hover:opacity-90"
           >
             Buy Now
           </button>

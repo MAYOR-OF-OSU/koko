@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Suspense } from "react";
 import { ShopSidebar } from "@/components/shop/shop-sidebar";
 import { ShopSearch } from "@/components/shop/shop-search";
 import { ShopPagination } from "@/components/shop/shop-pagination";
 import { ProductCard } from "@/components/shop/product-card";
 import { FeaturedRail } from "@/components/home/featured-rail";
+import { HeroCarousel } from "@/components/home/hero-carousel";
 import { NewsletterForm } from "@/components/home/newsletter";
 import { products, getCategory } from "@/lib/mock-data";
+
+// Dark, jewellery-forward frames the "Shop" wordmark stays legible over.
+const SHOP_BANNER = [
+  "/shop/shop-banner.jpg",
+  "/shop/lifestyle-dark.jpg",
+  "/hero/hero-editorial.jpg",
+  "/hero/hero-alt.jpg",
+];
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -50,17 +58,12 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
       {/* banner */}
       <section className="px-3 pt-12 sm:px-4 sm:pt-16 lg:pt-20">
         <div className="relative isolate overflow-hidden rounded-3xl bg-cocoa">
-          <Image
-            src="/shop/shop-banner.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="-z-10 object-cover opacity-70"
-          />
-          <div className="absolute inset-0 -z-10 bg-black/25" />
+          <HeroCarousel images={SHOP_BANNER} />
+          {/* legibility scrim — flat dim + a centre vignette, under the text */}
+          <div className="absolute inset-0 -z-10 bg-black/45" />
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55),transparent_72%)]" />
           <div className="flex min-h-[26vh] items-center justify-center py-10">
-            <h1 className="font-heading text-[22vw] leading-none text-white/90 sm:text-[12rem]">
+            <h1 className="font-heading text-[22vw] leading-none text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.55)] sm:text-[12rem]">
               Shop
             </h1>
           </div>
