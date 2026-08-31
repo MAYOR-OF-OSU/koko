@@ -56,7 +56,7 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
   return (
     <>
       {/* banner */}
-      <section className="px-3 pt-12 sm:px-4 sm:pt-16 lg:pt-20">
+      <section className="px-3 pt-3 sm:px-4 sm:pt-4">
         <div className="relative isolate overflow-hidden rounded-3xl bg-cocoa">
           <HeroCarousel images={SHOP_BANNER} />
           {/* legibility scrim — flat dim + a centre vignette, under the text */}
