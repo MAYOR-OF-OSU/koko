@@ -30,6 +30,7 @@ const MAP = {
   CircleCheckIcon: "check-circle-solid",
   CircleUser: "user-circle-solid",
   Copy: "copy-solid",
+  CreditCard: "credit-card-solid",
   Database: "database-solid",
   Download: "download-solid",
   ExternalLink: "external-link-alt-solid",

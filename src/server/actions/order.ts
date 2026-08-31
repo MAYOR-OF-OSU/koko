@@ -167,6 +167,37 @@ export async function verifyOrderPayment(id: string): Promise<VerifyOrderResult>
   }
 }
 
+/** Admin only — one-click "mark this payment successful" from the Payments list.
+ * pending → paid: stamps paidAt, keeps the Paystack ref if there is one (else
+ * "manual"), emails the receipt and writes an audit row. */
+export async function markPaymentSuccessful(id: string): Promise<Result> {
+  try {
+    const session = await requireAdmin();
+    const order = await prisma.order.findUnique({
+      where: { id },
+      select: { reference: true, status: true, paystackRef: true },
+    });
+    if (!order) return { ok: false, error: "Order not found" };
+    if (order.status !== "pending") {
+      return { ok: false, error: `This payment is already ${order.status}.` };
+    }
+
+    await markOrderPaid(order.reference, order.paystackRef ?? "manual", {
+      manual: !order.paystackRef,
+      actorEmail: session.user.email,
+    });
+
+    revalidatePath("/admin/payments");
+    revalidatePath("/admin/orders");
+    revalidatePath(`/admin/orders/${id}`);
+    revalidatePath("/account/orders");
+    revalidatePath("/track-order");
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Could not update the payment" };
+  }
+}
+
 /** Admin only — force an order to paid for a payment confirmed off Paystack (bank transfer, etc). */
 export async function resolveOrderPaymentManually(id: string, note: string): Promise<Result> {
   try {
