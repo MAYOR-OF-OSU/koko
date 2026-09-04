@@ -86,6 +86,7 @@ const MAP = {
   ShoppingCart: "shopping-cart-solid",
   SlidersHorizontal: "sliders-h-solid",
   Sparkles: "magic-solid",
+  Store: "store-alt-solid",
   Star: "star-solid",
   Tags: "tags-solid",
   Trash2: "trash-alt-solid",

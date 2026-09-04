@@ -25,9 +25,10 @@ export const footerNav = {
     { label: "Contact Us", href: "/contact" },
     { label: "FAQ", href: "/faq" },
     { label: "Track Order", href: "/track-order" },
+    { label: "My account", href: "/account" },
   ],
   policies: [
-    { label: "Shipping", href: "/faq#shipping" },
+    { label: "Shipping & delivery", href: "/faq#shipping" },
     { label: "Returns", href: "/faq#returns" },
     { label: "Privacy Policy", href: "/faq#privacy" },
     { label: "Terms of Service", href: "/faq#terms" },

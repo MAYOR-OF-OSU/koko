@@ -1,6 +1,9 @@
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { FooterNewsletter } from "@/components/layout/footer-newsletter";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
+import { BackToTop } from "@/components/layout/back-to-top";
+import { MobileTabBar } from "@/components/layout/mobile-tab-bar";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { HomeBrandStrip } from "@/components/brand/home-brand-strip";
 
@@ -12,12 +15,16 @@ export default function StorefrontLayout({ children }: LayoutProps<"/">) {
       <SiteHeader announcement={<AnnouncementBar />} />
       <main className="bg-background">{children}</main>
       {/* mt-auto pins this group to the bottom; its own bg keeps the brand strip's
-          translucent tint reading correctly over light, not over cocoa. */}
-      <div className="mt-auto bg-background">
+          translucent tint reading correctly over light, not over cocoa.
+          pb keeps the last footer row clear of the fixed mobile tab bar. */}
+      <div className="mt-auto bg-background pb-16 lg:pb-0">
         <HomeBrandStrip />
+        <FooterNewsletter />
         <SiteFooter />
       </div>
       <CartDrawer />
+      <BackToTop />
+      <MobileTabBar />
     </div>
   );
 }

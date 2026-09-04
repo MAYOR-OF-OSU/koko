@@ -1,7 +1,7 @@
 import Link from "next/link";
+import type { ComponentType } from "react";
 import { MapPin, Phone, Mail, MessageCircle } from "@/components/ui/icon";
 import { Logo } from "@/components/brand/logo";
-import { NewsletterForm } from "@/components/home/newsletter";
 import { footerNav } from "@/lib/nav";
 import { getStoreSettings } from "@/lib/site-content";
 
@@ -43,22 +43,51 @@ function LinkColumn({ title, links }: { title: string; links: { label: string; h
   );
 }
 
+/** One stacked icon-above-label contact tile. */
+function ContactTile({
+  icon: Icon,
+  label,
+  href,
+  external,
+}: {
+  icon: ComponentType<{ className?: string }>;
+  label: string;
+  href?: string;
+  external?: boolean;
+}) {
+  const inner = (
+    <>
+      <Icon className="size-4 shrink-0 text-accent-gold" />
+      <span className="text-[0.72rem] leading-snug text-cocoa-foreground/70">{label}</span>
+    </>
+  );
+  const cls = "flex flex-col items-center gap-1.5 text-center transition-colors hover:text-cocoa-foreground";
+  if (!href) return <span className={cls}>{inner}</span>;
+  return (
+    <a
+      href={href}
+      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+      className={cls}
+    >
+      {inner}
+    </a>
+  );
+}
+
 export async function SiteFooter() {
   const contact = await getStoreSettings();
   return (
-    <footer className="mt-6 bg-cocoa text-cocoa-foreground sm:mt-8">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-8">
-        <div className="grid gap-x-6 gap-y-7 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+    <footer className="bg-cocoa text-cocoa-foreground">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-8">
+        <div className="grid gap-x-6 gap-y-8 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="max-w-sm">
             <Link href="/" aria-label="Timi's Jewels home" className="inline-block">
               <Logo variant="lockup" className="h-8 text-cocoa-foreground" />
             </Link>
             <p className="mt-3 text-[0.8rem] leading-relaxed text-cocoa-foreground/70">
-              Handpicked fashion jewelry, finished by hand and shipped nationwide.
+              Handpicked fashion jewelry, finished by hand and shipped nationwide — honest listings,
+              secure checkout and nationwide delivery.
             </p>
-            <div className="mt-4">
-              <NewsletterForm variant="footer" />
-            </div>
           </div>
 
           {/* 3-up on mobile; unwraps into the 4-col grid at lg */}
@@ -69,60 +98,40 @@ export async function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-7 flex flex-col gap-3 border-t border-cocoa-foreground/15 pt-5 text-xs text-cocoa-foreground/60 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5">
-          <span className="flex items-center gap-1.5">
-            <MapPin className="size-3.5 shrink-0 text-accent-gold" />
-            {contact.address}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Phone className="size-3.5 shrink-0 text-accent-gold" />
-            {contact.phones.map((p, i) => (
-              <span key={p}>
-                <a href={telHref(p)} className="hover:text-cocoa-foreground">
-                  {p}
-                </a>
-                {i < contact.phones.length - 1 && <span className="mx-1">·</span>}
-              </span>
-            ))}
-          </span>
+        {/* contact row — icon above label, evenly spread */}
+        <div className="mt-9 flex flex-wrap items-start justify-center gap-x-10 gap-y-5 border-t border-cocoa-foreground/15 pt-6 sm:justify-between">
+          <ContactTile icon={MapPin} label={contact.address} />
+          {contact.phones.length > 0 && (
+            <ContactTile icon={Phone} label={contact.phones.join("  ·  ")} href={telHref(contact.phones[0])} />
+          )}
           {contact.email && (
-            <a
-              href={`mailto:${contact.email}`}
-              className="flex items-center gap-1.5 hover:text-cocoa-foreground"
-            >
-              <Mail className="size-3.5 shrink-0 text-accent-gold" />
-              {contact.email}
-            </a>
+            <ContactTile icon={Mail} label={contact.email} href={`mailto:${contact.email}`} />
           )}
           {contact.whatsapp && (
-            <a
+            <ContactTile
+              icon={MessageCircle}
+              label="WhatsApp"
               href={`https://wa.me/${contact.whatsapp}`}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-1.5 hover:text-cocoa-foreground"
-            >
-              <MessageCircle className="size-3.5 shrink-0 text-accent-gold" />
-              WhatsApp
-            </a>
+              external
+            />
           )}
-          <a
-            href={contact.instagram}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-1.5 hover:text-cocoa-foreground sm:ml-auto"
-          >
-            <InstagramIcon className="size-3.5 shrink-0 text-accent-gold" />
-            {igHandle(contact.instagram)}
-          </a>
+          {contact.instagram && (
+            <ContactTile
+              icon={InstagramIcon}
+              label={igHandle(contact.instagram)}
+              href={contact.instagram}
+              external
+            />
+          )}
         </div>
 
-        <div className="mt-4 flex flex-col items-center justify-between gap-2 border-t border-cocoa-foreground/15 pt-4 text-[0.68rem] text-cocoa-foreground/45 sm:flex-row">
+        <div className="mt-6 flex flex-col items-center justify-between gap-3 border-t border-cocoa-foreground/15 pt-5 text-[0.68rem] text-cocoa-foreground/45 sm:flex-row">
           <p>© {new Date().getFullYear()} Timi&rsquo;s Jewels. All rights reserved.</p>
-          <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex flex-wrap items-center justify-center gap-1.5">
             {["Paystack", "Visa", "Mastercard", "Verve"].map((p) => (
               <span
                 key={p}
-                className="rounded-sm border border-cocoa-foreground/20 px-1.5 py-0.5 text-[9px] uppercase tracking-wider"
+                className="rounded-sm border border-cocoa-foreground/25 px-2 py-1 text-[0.6rem] uppercase tracking-wider text-cocoa-foreground/60"
               >
                 {p}
               </span>

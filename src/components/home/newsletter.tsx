@@ -6,7 +6,11 @@ import { ArrowRight } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/motion/reveal";
 
-export function NewsletterForm({ variant = "section" }: { variant?: "section" | "footer" }) {
+export function NewsletterForm({
+  variant = "section",
+}: {
+  variant?: "section" | "footer" | "band";
+}) {
   const [pending, setPending] = React.useState(false);
   const footer = variant === "footer";
 
@@ -29,6 +33,27 @@ export function NewsletterForm({ variant = "section" }: { variant?: "section" | 
     } finally {
       setPending(false);
     }
+  }
+
+  if (variant === "band") {
+    return (
+      <form onSubmit={onSubmit} className="flex w-full flex-col gap-3 sm:flex-row">
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="Your email address"
+          className="min-w-0 flex-1 rounded-md border border-border bg-background px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-foreground"
+        />
+        <button
+          type="submit"
+          disabled={pending}
+          className="btn-fill shrink-0 rounded-md bg-primary px-6 py-3 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-primary-foreground transition disabled:opacity-60"
+        >
+          {pending ? "Subscribing…" : "Subscribe"}
+        </button>
+      </form>
+    );
   }
 
   return (
